@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jizan.master.dao.NewsDao">
+	<resultMap type="com.jizan.master.entity.News" id="NewsRM">
+		<id column = "id" property = "id" />
+		<result column = "title" property = "title" />
+		<result column = "summary" property = "summary" />
+		<result column = "cover" property = "cover" />
+		<result column = "content" property = "content" />
+		<result column = "source" property = "source" />
+		<result column = "url" property = "url" />
+		<result column = "tags" property = "tags" />
+		<result column = "readnum" property = "readnum" />
+		<result column = "createdon" property = "createdon" />
+		<result column = "createdby" property = "createdby" />
+	</resultMap>
+	<!-- _____________________________________________________________________________ 全部字段 -->
+	<sql id="COLUMNS">
+		id,title,summary,cover,content,source,url,tags,readnum,createdon,createdby
+	</sql>
+
+	<!-- _____________________________________________________________________________ 1.add -->
+
+	<insert id="add" parameterType="com.jizan.master.entity.News">
+		insert into tb_news (id,title,summary,cover,content,source,url,tags,readnum,createdon,createdby)
+		values (#{id},#{title},#{summary},#{cover},#{content},#{source},#{url},#{tags},#{readnum},#{createdon},#{createdby})
+	</insert>
+
+	<!-- ______________________________________________________________________________ 2.modify -->
+
+	<update id="modify" parameterType="com.jizan.master.entity.News">
+		update tb_news 
+		<set>
+		<if test="id != null">id= #{id},</if>
+		<if test="title != null">title= #{title},</if>
+		<if test="summary != null">summary= #{summary},</if>
+		<if test="cover != null">cover= #{cover},</if>
+		<if test="content != null">content= #{content},</if>
+		<if test="source != null">source= #{source},</if>
+		<if test="url != null">url= #{url},</if>
+		<if test="tags != null">tags= #{tags},</if>
+		<if test="readnum != null">readnum= #{readnum},</if>
+		<if test="createdon != null">createdon= #{createdon},</if>
+		<if test="createdby != null">createdby= #{createdby}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<!-- _____________________________________________________________________________ 3.removeById -->
+
+	<delete id="removeById" parameterType="int">
+		delete from tb_news where id=#{id} 
+	</delete>
+
+	<!-- _____________________________________________________________________________ 4.removeByIds -->
+
+	<delete id="removeByIds" parameterType="List">
+		delete from tb_news where id in 
+		<foreach collection = "list" index="index"  item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<!-- _____________________________________________________________________________ 5.listAll -->
+
+	<select id="listAll" resultMap="NewsRM">
+		select <include refid="COLUMNS" /> from tb_news
+		order by createdon desc
+	</select>
+
+	<!-- _____________________________________________________________________________ 6.listBy -->
+
+	<select id="listBy" parameterType="map" resultMap="NewsRM">
+		select <include refid="COLUMNS" /> from tb_news
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="title != null">and title= #{title}</if>
+		<if test="summary != null">and summary= #{summary}</if>
+		<if test="cover != null">and cover= #{cover}</if>
+		<if test="content != null">and content= #{content}</if>
+		<if test="source != null">and source= #{source}</if>
+		<if test="url != null">and url= #{url}</if>
+		<if test="tags != null">and tags= #{tags}</if>
+		<if test="readnum != null">and readnum= #{readnum}</if>
+		<if test="createdon != null">and createdon= #{createdon}</if>
+		<if test="createdby != null">and createdby= #{createdby}</if>
+		</where>
+		order by createdon desc
+	</select>
+
+	<!-- _____________________________________________________________________________ 7.pageBy -->
+
+	<select id="pageByIds" parameterType="map" resultMap="NewsRM">
+		select <include refid="COLUMNS" /> from tb_news where id in
+		<foreach collection = "idsList" index="index"  item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
+	<!-- _____________________________________________________________________________ 7.pageBy -->
+
+	<select id="pageBy" parameterType="map" resultMap="NewsRM">
+		select <include refid="COLUMNS" /> from tb_news
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="title != null">and title= #{title}</if>
+		<if test="summary != null">and summary= #{summary}</if>
+		<if test="cover != null">and cover= #{cover}</if>
+		<if test="content != null">and content= #{content}</if>
+		<if test="source != null">and source= #{source}</if>
+		<if test="url != null">and url= #{url}</if>
+		<if test="tags != null">and tags= #{tags}</if>
+		<if test="readnum != null">and readnum= #{readnum}</if>
+		<if test="createdon != null">and createdon= #{createdon}</if>
+		<if test="createdby != null">and createdby= #{createdby}</if>
+		</where>
+		order by createdon desc
+		limit #{startIdx},#{limit}
+	</select>
+
+	<!-- _____________________________________________________________________________ 8.1.findByMap -->
+
+	<select id="findByMap" parameterType="map" resultMap="NewsRM">
+		select <include refid="COLUMNS" /> from tb_news
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="title != null">and title= #{title}</if>
+		<if test="summary != null">and summary= #{summary}</if>
+		<if test="cover != null">and cover= #{cover}</if>
+		<if test="content != null">and content= #{content}</if>
+		<if test="source != null">and source= #{source}</if>
+		<if test="url != null">and url= #{url}</if>
+		<if test="tags != null">and tags= #{tags}</if>
+		<if test="readnum != null">and readnum= #{readnum}</if>
+		<if test="createdon != null">and createdon= #{createdon}</if>
+		<if test="createdby != null">and createdby= #{createdby}</if>
+		</where>
+	</select>
+
+	<!-- _____________________________________________________________________________ 8.2.findBy -->
+
+	<select id="findBy" parameterType="com.jizan.master.entity.News" resultMap="NewsRM">
+		select <include refid="COLUMNS" /> from tb_news
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="title != null">and title= #{title}</if>
+		<if test="summary != null">and summary= #{summary}</if>
+		<if test="cover != null">and cover= #{cover}</if>
+		<if test="content != null">and content= #{content}</if>
+		<if test="source != null">and source= #{source}</if>
+		<if test="url != null">and url= #{url}</if>
+		<if test="tags != null">and tags= #{tags}</if>
+		<if test="readnum != null">and readnum= #{readnum}</if>
+		<if test="createdon != null">and createdon= #{createdon}</if>
+		<if test="createdby != null">and createdby= #{createdby}</if>
+		</where>
+	</select>
+
+	<!-- _____________________________________________________________________________ 9.findById -->
+
+	<select id="findById" parameterType="int" resultMap="NewsRM">
+		select <include refid="COLUMNS" /> from tb_news where id = #{id}
+	</select>
+
+	<!-- _____________________________________________________________________________ 10.countAll -->
+
+	<select id="countAll" resultType="integer">
+		select count(id) from tb_news
+	</select>
+
+	<!-- _____________________________________________________________________________ 11.countBy -->
+
+	<select id="countBy" parameterType="map" resultType="integer">
+		select count(id) from tb_news
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="title != null">and title= #{title}</if>
+		<if test="summary != null">and summary= #{summary}</if>
+		<if test="cover != null">and cover= #{cover}</if>
+		<if test="content != null">and content= #{content}</if>
+		<if test="source != null">and source= #{source}</if>
+		<if test="url != null">and url= #{url}</if>
+		<if test="tags != null">and tags= #{tags}</if>
+		<if test="readnum != null">and readnum= #{readnum}</if>
+		<if test="createdon != null">and createdon= #{createdon}</if>
+		<if test="createdby != null">and createdby= #{createdby}</if>
+		</where>
+	</select>
+	<!-- ******************Other Mappers****************** -->
+</mapper>

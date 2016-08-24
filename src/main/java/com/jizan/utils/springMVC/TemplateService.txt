@@ -1,0 +1,8 @@
+package {GroupId}.{ArtifactId}.service;
+
+import {GroupId}.{ArtifactId}.entity.{EntityName};
+import {GroupId}.{ArtifactId}.service.BaseService;
+
+public interface {EntityName}Service extends BaseService<{EntityName}> {
+
+}

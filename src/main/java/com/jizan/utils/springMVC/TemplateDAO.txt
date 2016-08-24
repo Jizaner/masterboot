@@ -1,0 +1,8 @@
+package {GroupId}.{ArtifactId}.dao;
+
+import {GroupId}.{ArtifactId}.dao.BaseDao;
+import {GroupId}.{ArtifactId}.entity.{EntityName};
+
+public interface {EntityName}Dao extends BaseDao<{EntityName}> {
+
+}

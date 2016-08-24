@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jizan.master.dao.TopicDao">
+	<resultMap id="TopicRM" type="com.jizan.master.entity.Topic">
+		<id column = "id" property = "id" />
+		<result column = "title" property = "title" />
+		<result column = "content" property = "content" />
+		<result column = "images" property = "images" />
+		<result column = "tags" property = "tags" />
+		<result column = "replynum" property = "replynum" />
+		<result column = "createdon" property = "createdon" />
+		<result column = "createdby" property = "createdby" />
+  		<association property="author"  javaType="HashMap" resultMap="authorRM"/> 
+ 	</resultMap>
+	<resultMap id="authorRM" type="HashMap">
+        <result property="avatar" column="author_avatar" />
+        <result property="nickname" column="author_nickname" />
+    </resultMap>
+	<!-- _____________________________________________________________________________ 全部字段 -->
+	<sql id="COLUMNS">
+		id,title,content,images,tags,replynum,createdon,createdby
+	</sql>
+
+	<!-- _____________________________________________________________________________ 1.add -->
+
+	<insert id="add" parameterType="com.jizan.master.entity.Topic" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_topics (id,title,content,images,tags,replynum,createdon,createdby)
+		values (#{id},#{title},#{content},#{images},#{tags},#{replynum},#{createdon},#{createdby})
+	</insert>
+
+	<!-- ______________________________________________________________________________ 2.modify -->
+
+	<update id="modify" parameterType="com.jizan.master.entity.Topic">
+		update tb_topics 
+		<set>
+		<if test="id != null">id= #{id},</if>
+		<if test="title != null">title= #{title},</if>
+		<if test="content != null">content= #{content},</if>
+		<if test="images != null">images= #{images},</if>
+		<if test="tags != null">tags= #{tags},</if>
+		<if test="replynum != null">replynum= #{replynum},</if>
+		<if test="createdon != null">createdon= #{createdon},</if>
+		<if test="createdby != null">createdby= #{createdby}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<!-- _____________________________________________________________________________ 3.removeById -->
+
+	<delete id="removeById" parameterType="int">
+		delete from tb_topics where id=#{id} 
+	</delete>
+
+	<!-- _____________________________________________________________________________ 4.removeByIds -->
+
+	<delete id="removeByIds" parameterType="List">
+		delete from tb_topics where id in 
+		<foreach collection = "list" index="index"  item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<!-- _____________________________________________________________________________ 5.listAll -->
+
+	<select id="listAll" resultMap="TopicRM">
+		select t.*,m.nickname as author_nickname,m.avatar as author_avatar from tb_topics t,tb_users m
+		where t.createdby = m.id
+		order by t.createdon desc
+	</select>
+
+	<!-- _____________________________________________________________________________ 6.listBy -->
+
+	<select id="listBy" parameterType="map" resultMap="TopicRM">
+		select <include refid="COLUMNS" /> from tb_topics
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="title != null">and title= #{title}</if>
+		<if test="content != null">and content= #{content}</if>
+		<if test="images != null">and images= #{images}</if>
+		<if test="tags != null">and tags= #{tags}</if>
+		<if test="replynum != null">and replynum= #{replynum}</if>
+		<if test="createdon != null">and createdon= #{createdon}</if>
+		<if test="createdby != null">and createdby= #{createdby}</if>
+		</where>
+		order by createdon desc
+	</select>
+
+	<!-- _____________________________________________________________________________ 7.pageBy -->
+
+	<select id="pageByIds" parameterType="map" resultMap="TopicRM">
+		select <include refid="COLUMNS" /> from tb_topics where id in
+		<foreach collection = "idsList" index="index"  item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+		order by createdon desc
+	</select>
+	<!-- _____________________________________________________________________________ 7.pageBy -->
+
+<!--     <select id="pageBy" parameterType="map" resultMap="TopicRM">
+		select <include refid="COLUMNS" /> from tb_topics
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="title != null">and title= #{title}</if>
+		<if test="content != null">and content= #{content}</if>
+		<if test="images != null">and images= #{images}</if>
+		<if test="tags != null">and tags= #{tags}</if>
+		<if test="replynum != null">and replynum= #{replynum}</if>
+		<if test="createdon != null">and createdon= #{createdon}</if>
+		<if test="createdby != null">and createdby= #{createdby}</if>
+		</where>
+		order by id desc
+		limit #{startIdx},#{limit}
+	</select> -->
+	
+	 <select id="pageBy" parameterType="map" resultMap="TopicRM">
+		select t.*,m.nickname as author_nickname,m.avatar as author_avatar from tb_topics t,tb_users m
+		<where>
+		t.createdby = m.id
+		<if test="id != null">and id= #{id}</if>
+		<if test="title != null">and title= #{title}</if>
+		<if test="content != null">and content= #{content}</if>
+		<if test="images != null">and images= #{images}</if>
+		<if test="tags != null">and tags= #{tags}</if>
+		<if test="replynum != null">and replynum= #{replynum}</if>
+		<if test="createdon != null">and createdon= #{createdon}</if>
+		<if test="createdby != null">and createdby= #{createdby}</if>
+		</where>
+		order by t.createdon desc
+		limit #{startIdx},#{limit}
+	</select> 
+
+	<select id="pageRepliedBy" parameterType="map" resultMap="TopicRM">
+		select DISTINCT(t.topicid),t.createdon as repliedon,m.*,u.nickname as author_nickname,u.avatar as author_avatar from tb_replies t, tb_topics m, tb_users u
+		<where>
+		t.topicid = m.id and u.id = m.createdby
+		<if test="repliedby != null">and t.createdby= #{repliedby}</if>
+		</where>
+		order by t.createdon desc
+		limit #{startIdx},#{limit}
+	</select>
+
+	<!-- _____________________________________________________________________________ 8.1.findByMap -->
+
+	<select id="findByMap" parameterType="map" resultMap="TopicRM">
+		select <include refid="COLUMNS" /> from tb_topics
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="title != null">and title= #{title}</if>
+		<if test="content != null">and content= #{content}</if>
+		<if test="images != null">and images= #{images}</if>
+		<if test="tags != null">and tags= #{tags}</if>
+		<if test="replynum != null">and replynum= #{replynum}</if>
+		<if test="createdon != null">and createdon= #{createdon}</if>
+		<if test="createdby != null">and createdby= #{createdby}</if>
+		</where>
+	</select>
+
+	<!-- _____________________________________________________________________________ 8.2.findBy -->
+
+	<select id="findBy" parameterType="com.jizan.master.entity.Topic" resultMap="TopicRM">
+		select t.*,m.nickname as author_nickname,m.avatar as author_avatar from tb_topics t,tb_users m
+		<where>
+		t.createdby = m.id
+		<if test="id != null">and id= #{id}</if>
+		<if test="title != null">and title= #{title}</if>
+		<if test="content != null">and content= #{content}</if>
+		<if test="images != null">and images= #{images}</if>
+		<if test="tags != null">and tags= #{tags}</if>
+		<if test="replynum != null">and replynum= #{replynum}</if>
+		<if test="createdon != null">and createdon= #{createdon}</if>
+		<if test="createdby != null">and createdby= #{createdby}</if>
+		</where>
+		order by t.createdon desc
+	</select>
+
+	<!-- _____________________________________________________________________________ 9.findById -->
+
+	<select id="findById" parameterType="long" resultMap="TopicRM">
+		select t.*,m.nickname as author_nickname,m.avatar as author_avatar from tb_topics t,tb_users m
+		where t.createdby = m.id and t.id = #{id}
+		order by t.createdon desc
+	</select>
+
+	<!-- _____________________________________________________________________________ 10.countAll -->
+
+	<select id="countAll" resultType="integer">
+		select count(id) from tb_topics
+	</select>
+
+	<!-- _____________________________________________________________________________ 11.countBy -->
+
+	<select id="countBy" parameterType="map" resultType="integer">
+		select count(id) from tb_topics
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="title != null">and title= #{title}</if>
+		<if test="content != null">and content= #{content}</if>
+		<if test="images != null">and images= #{images}</if>
+		<if test="tags != null">and tags= #{tags}</if>
+		<if test="replynum != null">and replynum= #{replynum}</if>
+		<if test="createdon != null">and createdon= #{createdon}</if>
+		<if test="createdby != null">and createdby= #{createdby}</if>
+		</where>
+	</select>
+	
+	<select id="countRepliedBy" parameterType="map" resultType="integer">
+		select count(DISTINCT(t.topicid)) from tb_replies t, tb_topics m
+		<where>
+		t.topicid = m.id
+		<if test="repliedby != null">and t.createdby= #{repliedby}</if>
+		</where>
+	</select>
+	<!-- ******************Other Mappers****************** -->
+</mapper>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jizan.master.dao.UserDao">
+	<resultMap type="com.jizan.master.entity.User" id="UserRM">
+		<id column = "id" property = "id" />
+		<result column = "nickname" property = "nickname" />
+		<result column = "mobile" property = "mobile" />
+		<result column = "password" property = "password" />
+		<result column = "truename" property = "truename" />
+		<result column = "slogan" property = "slogan" />
+		<result column = "sex" property = "sex" />
+		<result column = "wechat" property = "wechat" />
+		<result column = "address" property = "address" />
+		<result column = "email" property = "email" />
+		<result column = "birthday" property = "birthday" />
+		<result column = "avatar" property = "avatar" />
+		<result column = "tags" property = "tags" />
+		<result column = "certification" property = "certification" />
+		<result column = "vocation" property = "vocation" />
+		<result column = "experience" property = "experience" />
+		<result column = "devicetoken" property = "devicetoken" />
+		<result column = "registertime" property = "registertime" />
+		<result column = "registerlati" property = "registerlati" />
+		<result column = "registerlong" property = "registerlong" />
+		<result column = "appversion" property = "appversion" />
+	</resultMap>
+	<!-- _____________________________________________________________________________ 全部字段 -->
+	<sql id="COLUMNS">
+		id,nickname,mobile,password,truename,slogan,sex,wechat,address,email,birthday,avatar,tags,certification,vocation,experience,devicetoken,registertime,registerlati,registerlong,appversion
+	</sql>
+
+	<!-- _____________________________________________________________________________ 1.add -->
+
+	<insert id="add" parameterType="com.jizan.master.entity.User">
+		insert into tb_users (id,nickname,mobile,password,truename,slogan,sex,wechat,address,email,birthday,avatar,tags,certification,vocation,experience,devicetoken,registertime,registerlati,registerlong,appversion)
+		values (#{id},#{nickname},#{mobile},#{password},#{truename},#{slogan},#{sex},#{wechat},#{address},#{email},#{birthday},#{avatar},#{tags},#{certification},#{vocation},#{experience},#{devicetoken},#{registertime},#{registerlati},#{registerlong},#{appversion})
+	</insert>
+
+	<!-- ______________________________________________________________________________ 2.modify -->
+
+	<update id="modify" parameterType="com.jizan.master.entity.User">
+		update tb_users 
+		<set>
+		<if test="id != null">id= #{id},</if>
+		<if test="nickname != null">nickname= #{nickname},</if>
+		<if test="mobile != null">mobile= #{mobile},</if>
+		<if test="password != null">password= #{password},</if>
+		<if test="truename != null">truename= #{truename},</if>
+		<if test="slogan != null">slogan= #{slogan},</if>
+		<if test="sex != null">sex= #{sex},</if>
+		<if test="wechat != null">wechat= #{wechat},</if>
+		<if test="address != null">address= #{address},</if>
+		<if test="email != null">email= #{email},</if>
+		<if test="birthday != null">birthday= #{birthday},</if>
+		<if test="avatar != null">avatar= #{avatar},</if>
+		<if test="tags != null">tags= #{tags},</if>
+		<if test="certification != null">certification= #{certification},</if>
+		<if test="vocation != null">vocation= #{vocation},</if>
+		<if test="experience != null">experience= #{experience},</if>
+		<if test="devicetoken != null">devicetoken= #{devicetoken},</if>
+		<if test="registertime != null">registertime= #{registertime},</if>
+		<if test="registerlati != null">registerlati= #{registerlati},</if>
+		<if test="registerlong != null">registerlong= #{registerlong},</if>
+		<if test="appversion != null">appversion= #{appversion}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<!-- _____________________________________________________________________________ 3.removeById -->
+
+	<delete id="removeById" parameterType="int">
+		delete from tb_users where id=#{id} 
+	</delete>
+
+	<!-- _____________________________________________________________________________ 4.removeByIds -->
+
+	<delete id="removeByIds" parameterType="List">
+		delete from tb_users where id in 
+		<foreach collection = "list" index="index"  item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<!-- _____________________________________________________________________________ 5.listAll -->
+
+	<select id="listAll" resultMap="UserRM">
+		select <include refid="COLUMNS" /> from tb_users
+		order by registertime desc
+	</select>
+
+	<!-- _____________________________________________________________________________ 6.listBy -->
+
+	<select id="listBy" parameterType="map" resultMap="UserRM">
+		select <include refid="COLUMNS" /> from tb_users
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="nickname != null">and nickname= #{nickname}</if>
+		<if test="mobile != null">and mobile= #{mobile}</if>
+		<if test="password != null">and password= #{password}</if>
+		<if test="truename != null">and truename= #{truename}</if>
+		<if test="slogan != null">and slogan= #{slogan}</if>
+		<if test="sex != null">and sex= #{sex}</if>
+		<if test="wechat != null">and wechat= #{wechat}</if>
+		<if test="address != null">and address= #{address}</if>
+		<if test="email != null">and email= #{email}</if>
+		<if test="birthday != null">and birthday= #{birthday}</if>
+		<if test="avatar != null">and avatar= #{avatar}</if>
+		<if test="tags != null">and tags= #{tags}</if>
+		<if test="certification != null">and certification= #{certification}</if>
+		<if test="vocation != null">and vocation= #{vocation}</if>
+		<if test="experience != null">and experience= #{experience}</if>
+		<if test="devicetoken != null">and devicetoken= #{devicetoken}</if>
+		<if test="registertime != null">and registertime= #{registertime}</if>
+		<if test="registerlati != null">and registerlati= #{registerlati}</if>
+		<if test="registerlong != null">and registerlong= #{registerlong}</if>
+		<if test="appversion != null">and appversion= #{appversion}</if>
+		</where>
+		order by registertime desc
+	</select>
+
+	<!-- _____________________________________________________________________________ 7.pageBy -->
+
+	<select id="pageBy" parameterType="map" resultMap="UserRM">
+		select <include refid="COLUMNS" /> from tb_users
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="nickname != null">and nickname= #{nickname}</if>
+		<if test="mobile != null">and mobile= #{mobile}</if>
+		<if test="password != null">and password= #{password}</if>
+		<if test="truename != null">and truename= #{truename}</if>
+		<if test="slogan != null">and slogan= #{slogan}</if>
+		<if test="sex != null">and sex= #{sex}</if>
+		<if test="wechat != null">and wechat= #{wechat}</if>
+		<if test="address != null">and address= #{address}</if>
+		<if test="email != null">and email= #{email}</if>
+		<if test="birthday != null">and birthday= #{birthday}</if>
+		<if test="avatar != null">and avatar= #{avatar}</if>
+		<if test="tags != null">and tags= #{tags}</if>
+		<if test="certification != null">and certification= #{certification}</if>
+		<if test="vocation != null">and vocation= #{vocation}</if>
+		<if test="experience != null">and experience= #{experience}</if>
+		<if test="devicetoken != null">and devicetoken= #{devicetoken}</if>
+		<if test="registertime != null">and registertime= #{registertime}</if>
+		<if test="registerlati != null">and registerlati= #{registerlati}</if>
+		<if test="registerlong != null">and registerlong= #{registerlong}</if>
+		<if test="appversion != null">and appversion= #{appversion}</if>
+		</where>
+		order by registertime desc
+		limit #{startIdx},#{limit}
+	</select>
+
+	<!-- _____________________________________________________________________________ 8.1.findByMap -->
+
+	<select id="findByMap" parameterType="map" resultMap="UserRM">
+		select <include refid="COLUMNS" /> from tb_users
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="nickname != null">and nickname= #{nickname}</if>
+		<if test="mobile != null">and mobile= #{mobile}</if>
+		<if test="password != null">and password= #{password}</if>
+		<if test="truename != null">and truename= #{truename}</if>
+		<if test="slogan != null">and slogan= #{slogan}</if>
+		<if test="sex != null">and sex= #{sex}</if>
+		<if test="wechat != null">and wechat= #{wechat}</if>
+		<if test="address != null">and address= #{address}</if>
+		<if test="email != null">and email= #{email}</if>
+		<if test="birthday != null">and birthday= #{birthday}</if>
+		<if test="avatar != null">and avatar= #{avatar}</if>
+		<if test="tags != null">and tags= #{tags}</if>
+		<if test="certification != null">and certification= #{certification}</if>
+		<if test="vocation != null">and vocation= #{vocation}</if>
+		<if test="experience != null">and experience= #{experience}</if>
+		<if test="devicetoken != null">and devicetoken= #{devicetoken}</if>
+		<if test="registertime != null">and registertime= #{registertime}</if>
+		<if test="registerlati != null">and registerlati= #{registerlati}</if>
+		<if test="registerlong != null">and registerlong= #{registerlong}</if>
+		<if test="appversion != null">and appversion= #{appversion}</if>
+		</where>
+	</select>
+
+	<!-- _____________________________________________________________________________ 8.2.findBy -->
+
+	<select id="findBy" parameterType="com.jizan.master.entity.User" resultMap="UserRM">
+		select <include refid="COLUMNS" /> from tb_users
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="nickname != null">and nickname= #{nickname}</if>
+		<if test="mobile != null">and mobile= #{mobile}</if>
+		<if test="password != null">and password= #{password}</if>
+		<if test="truename != null">and truename= #{truename}</if>
+		<if test="slogan != null">and slogan= #{slogan}</if>
+		<if test="sex != null">and sex= #{sex}</if>
+		<if test="wechat != null">and wechat= #{wechat}</if>
+		<if test="address != null">and address= #{address}</if>
+		<if test="email != null">and email= #{email}</if>
+		<if test="birthday != null">and birthday= #{birthday}</if>
+		<if test="avatar != null">and avatar= #{avatar}</if>
+		<if test="tags != null">and tags= #{tags}</if>
+		<if test="certification != null">and certification= #{certification}</if>
+		<if test="vocation != null">and vocation= #{vocation}</if>
+		<if test="experience != null">and experience= #{experience}</if>
+		<if test="devicetoken != null">and devicetoken= #{devicetoken}</if>
+		<if test="registertime != null">and registertime= #{registertime}</if>
+		<if test="registerlati != null">and registerlati= #{registerlati}</if>
+		<if test="registerlong != null">and registerlong= #{registerlong}</if>
+		<if test="appversion != null">and appversion= #{appversion}</if>
+		</where>
+	</select>
+
+	<!-- _____________________________________________________________________________ 9.findById -->
+
+	<select id="findById" parameterType="int" resultMap="UserRM">
+		select <include refid="COLUMNS" /> from tb_users where id = #{id}
+	</select>
+
+	<!-- _____________________________________________________________________________ 10.countAll -->
+
+	<select id="countAll" resultType="integer">
+		select count(id) from tb_users
+	</select>
+
+	<!-- _____________________________________________________________________________ 11.countBy -->
+
+	<select id="countBy" parameterType="map" resultType="integer">
+		select count(id) from tb_users
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="nickname != null">and nickname= #{nickname}</if>
+		<if test="mobile != null">and mobile= #{mobile}</if>
+		<if test="password != null">and password= #{password}</if>
+		<if test="truename != null">and truename= #{truename}</if>
+		<if test="slogan != null">and slogan= #{slogan}</if>
+		<if test="sex != null">and sex= #{sex}</if>
+		<if test="wechat != null">and wechat= #{wechat}</if>
+		<if test="address != null">and address= #{address}</if>
+		<if test="email != null">and email= #{email}</if>
+		<if test="birthday != null">and birthday= #{birthday}</if>
+		<if test="avatar != null">and avatar= #{avatar}</if>
+		<if test="tags != null">and tags= #{tags}</if>
+		<if test="certification != null">and certification= #{certification}</if>
+		<if test="vocation != null">and vocation= #{vocation}</if>
+		<if test="experience != null">and experience= #{experience}</if>
+		<if test="devicetoken != null">and devicetoken= #{devicetoken}</if>
+		<if test="registertime != null">and registertime= #{registertime}</if>
+		<if test="registerlati != null">and registerlati= #{registerlati}</if>
+		<if test="registerlong != null">and registerlong= #{registerlong}</if>
+		<if test="appversion != null">and appversion= #{appversion}</if>
+		</where>
+	</select>
+	<!-- ******************Other Mappers****************** -->
+</mapper>

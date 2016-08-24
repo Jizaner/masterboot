@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jizan.master.dao.FeedbackDao">
+	<resultMap type="com.jizan.master.entity.Feedback" id="FeedbackRM">
+		<id column = "id" property = "id" />
+		<result column = "content" property = "content" />
+		<result column = "images" property = "images" />
+		<result column = "category" property = "category" />
+		<result column = "createdby" property = "createdby" />
+		<result column = "createdon" property = "createdon" />
+	</resultMap>
+	<!-- _____________________________________________________________________________ 全部字段 -->
+	<sql id="COLUMNS">
+		id,content,images,category,createdby,createdon
+	</sql>
+
+	<!-- _____________________________________________________________________________ 1.add -->
+
+	<insert id="add" parameterType="com.jizan.master.entity.Feedback">
+		insert into tb_feedbacks (id,content,images,category,createdby,createdon)
+		values (#{id},#{content},#{images},#{category},#{createdby},#{createdon})
+	</insert>
+
+	<!-- ______________________________________________________________________________ 2.modify -->
+
+	<update id="modify" parameterType="com.jizan.master.entity.Feedback">
+		update tb_feedbacks 
+		<set>
+		<if test="id != null">id= #{id},</if>
+		<if test="content != null">content= #{content},</if>
+		<if test="images != null">images= #{images},</if>
+		<if test="category != null">category= #{category},</if>
+		<if test="createdby != null">createdby= #{createdby},</if>
+		<if test="createdon != null">createdon= #{createdon}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<!-- _____________________________________________________________________________ 3.removeById -->
+
+	<delete id="removeById" parameterType="int">
+		delete from tb_feedbacks where id=#{id} 
+	</delete>
+
+	<!-- _____________________________________________________________________________ 4.removeByIds -->
+
+	<delete id="removeByIds" parameterType="List">
+		delete from tb_feedbacks where id in 
+		<foreach collection = "list" index="index"  item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<!-- _____________________________________________________________________________ 5.listAll -->
+
+	<select id="listAll" resultMap="FeedbackRM">
+		select <include refid="COLUMNS" /> from tb_feedbacks
+		order by createdon desc
+	</select>
+
+	<!-- _____________________________________________________________________________ 6.listBy -->
+
+	<select id="listBy" parameterType="map" resultMap="FeedbackRM">
+		select <include refid="COLUMNS" /> from tb_feedbacks
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="content != null">and content= #{content}</if>
+		<if test="images != null">and images= #{images}</if>
+		<if test="category != null">and category= #{category}</if>
+		<if test="createdby != null">and createdby= #{createdby}</if>
+		<if test="createdon != null">and createdon= #{createdon}</if>
+		</where>
+		order by createdon desc
+	</select>
+
+	<!-- _____________________________________________________________________________ 7.pageBy -->
+
+	<select id="pageBy" parameterType="map" resultMap="FeedbackRM">
+		select <include refid="COLUMNS" /> from tb_feedbacks
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="content != null">and content= #{content}</if>
+		<if test="images != null">and images= #{images}</if>
+		<if test="category != null">and category= #{category}</if>
+		<if test="createdby != null">and createdby= #{createdby}</if>
+		<if test="createdon != null">and createdon= #{createdon}</if>
+		</where>
+		order by createdon desc
+		limit #{startIdx},#{limit}
+	</select>
+
+	<!-- _____________________________________________________________________________ 8.1.findByMap -->
+
+	<select id="findByMap" parameterType="map" resultMap="FeedbackRM">
+		select <include refid="COLUMNS" /> from tb_feedbacks
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="content != null">and content= #{content}</if>
+		<if test="images != null">and images= #{images}</if>
+		<if test="category != null">and category= #{category}</if>
+		<if test="createdby != null">and createdby= #{createdby}</if>
+		<if test="createdon != null">and createdon= #{createdon}</if>
+		</where>
+	</select>
+
+	<!-- _____________________________________________________________________________ 8.2.findBy -->
+
+	<select id="findBy" parameterType="com.jizan.master.entity.Feedback" resultMap="FeedbackRM">
+		select <include refid="COLUMNS" /> from tb_feedbacks
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="content != null">and content= #{content}</if>
+		<if test="images != null">and images= #{images}</if>
+		<if test="category != null">and category= #{category}</if>
+		<if test="createdby != null">and createdby= #{createdby}</if>
+		<if test="createdon != null">and createdon= #{createdon}</if>
+		</where>
+	</select>
+
+	<!-- _____________________________________________________________________________ 9.findById -->
+
+	<select id="findById" parameterType="int" resultMap="FeedbackRM">
+		select <include refid="COLUMNS" /> from tb_feedbacks where id = #{id}
+	</select>
+
+	<!-- _____________________________________________________________________________ 10.countAll -->
+
+	<select id="countAll" resultType="integer">
+		select count(id) from tb_feedbacks
+	</select>
+
+	<!-- _____________________________________________________________________________ 11.countBy -->
+
+	<select id="countBy" parameterType="map" resultType="integer">
+		select count(id) from tb_feedbacks
+		<where>
+		<if test="id != null">and id= #{id}</if>
+		<if test="content != null">and content= #{content}</if>
+		<if test="images != null">and images= #{images}</if>
+		<if test="category != null">and category= #{category}</if>
+		<if test="createdby != null">and createdby= #{createdby}</if>
+		<if test="createdon != null">and createdon= #{createdon}</if>
+		</where>
+	</select>
+	<!-- ******************Other Mappers****************** -->
+</mapper>

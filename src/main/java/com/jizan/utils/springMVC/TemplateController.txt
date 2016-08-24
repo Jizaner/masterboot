@@ -1,0 +1,107 @@
+package {GroupId}.{ArtifactId}.api;
+
+import java.util.List;
+import javax.annotation.Resource;
+import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.*;
+
+import {GroupId}.utils.Pager;
+import {GroupId}.utils.SystemConfig;
+import {GroupId}.utils.JsonResult;
+
+import {GroupId}.{ArtifactId}.entity.{EntityName};
+import {GroupId}.{ArtifactId}.service.{EntityName}Service;
+
+@Api(value = "{entityName}",description = "/*添加注释*/")
+@RestController
+@RequestMapping("/{entityName}")
+public class {EntityName}Controller {
+
+	@Resource
+	private {EntityName}Service {entityName}Service;
+
+	/* Show ******************/
+	@ApiOperation(value = "根据ID获取{entityName}#v1.0",notes = "根据ID获取{entityName}#v1.0")
+	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public JsonResult _show(@PathVariable("id") int id) {
+		{EntityName} {entityName} = this.{entityName}Service.findById(id);
+		return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN,{entityName});
+	}
+
+	/* List ******************/
+	@ApiOperation(value = "获取全部{entityName}列表#v1.0",notes = "获取全部{entityName}列表#v1.0")
+	@RequestMapping(value = "/list",method=RequestMethod.POST)
+	@ResponseBody
+	public JsonResult _list() {
+		List<{EntityName}> list = this.{entityName}Service.listAll();
+		return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN,list);
+	}
+
+	/* Page ******************/
+	@ApiOperation(value = "根据页码获取{entityName}分页数据#v1.0",notes = "根据页码获取{entityName}分页数据#v1.0")
+	@RequestMapping(value = "/page/{num:\\d+}",method=RequestMethod.GET)
+	@ResponseBody
+	public JsonResult _page(@PathVariable("num") int pageNum) {
+		int limit = 20;
+		Pager pager = this.{entityName}Service.pageAll(pageNum, limit);
+		return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN,pager);
+	}
+
+	/* Pager ****************/
+	@ApiOperation(value = "获取{entityName}分页#v1.0",notes = "获取{entityName}分页#v1.0")
+	@RequestMapping(value = "/pager",method=RequestMethod.POST)
+	@ResponseBody
+	public JsonResult _pageTable(int offset, int limit) {
+		int pageNum = offset / limit + 1;
+		Pager pager = this.{entityName}Service.pageAll(pageNum, limit);
+		return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN,pager);
+	}
+
+	/* Add ******************/
+	@ApiOperation(value = "新增{entityName}#v1.0",notes = "新增{entityName}#v1.0")
+	@RequestMapping(value = "/new",method=RequestMethod.POST)
+	@ResponseBody
+	public JsonResult _new(@RequestBody {EntityName} {entityName}) {
+		try {
+			Random ram=new Random();
+			{entityName}.setCreatedby(1000000+(long)Math.abs(ram.nextInt()%11));//取0~10之间的随机数
+			{entityName}.setCreatedon(System.currentTimeMillis()/1000);
+			this.{entityName}Service.add({entityName});
+		} catch (Exception e) {
+			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);
+		}
+		return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN);
+	}
+
+	/* Edit *****************/
+	@ApiOperation(value = "更新{entityName}#v1.0",notes = "更新{entityName}#v1.0")
+	@RequestMapping(value = "/update",method=RequestMethod.POST)
+	@ResponseBody
+	public JsonResult _update({EntityName} {entityName}) {
+		try {
+			this.{entityName}Service.modify({entityName});
+		} catch (Exception e) {
+			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);
+		}
+		return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN);
+	}
+
+	/* Delete ***************/
+	@ApiOperation(value = "删除{entityName}#v1.0",notes = "删除{entityName}#v1.0")
+	@RequestMapping(value = "/delete",method=RequestMethod.POST)
+	@ResponseBody
+	public JsonResult _delete(
+			@RequestParam(value = "ids", required = true, defaultValue = "") String idstring) {
+		try {
+			String[] ids = idstring.split(",");
+			for (int i = 0; i < ids.length; i++) {
+				this.{entityName}Service.removeById(Integer.parseInt(ids[i]));
+			}
+		} catch (Exception e) {
+			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);
+		}
+		return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN);
+	}
+
+}

@@ -1,0 +1,19 @@
+package {GroupId}.{ArtifactId}.service.impl;
+
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+import {GroupId}.{ArtifactId}.dao.{EntityName}Dao;
+import {GroupId}.{ArtifactId}.dao.BaseDao;
+import {GroupId}.{ArtifactId}.entity.{EntityName};
+import {GroupId}.{ArtifactId}.service.{EntityName}Service;
+import {GroupId}.{ArtifactId}.service.impl.BaseServiceImpl;
+
+@Service
+public class {EntityName}ServiceImpl extends BaseServiceImpl<{EntityName}> implements {EntityName}Service {
+	@Resource
+	private {EntityName}Dao {entityName}Dao;
+
+	public BaseDao<{EntityName}> getBaseDao() {
+		return this.{entityName}Dao;
+	}
+}

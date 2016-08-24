@@ -1,0 +1,10 @@
+package {GroupId}.{ArtifactId}.entity;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class {EntityName} {
+
+{properties}
+{getters_setters}
+}
