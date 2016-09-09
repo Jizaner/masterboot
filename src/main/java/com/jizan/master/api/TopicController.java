@@ -1,6 +1,10 @@
 package com.jizan.master.api;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +29,7 @@ import com.jizan.utils.Pager;
 import com.jizan.utils.StringUtil;
 import com.jizan.utils.JsonResult;
 import com.jizan.utils.SystemConfig;
+import com.jizan.vendors.qiniu.QiniuUpload;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -169,9 +174,9 @@ public class TopicController extends BaseController {
 		return pager;
 	}
 
-	@ApiOperation(value = "新增主题，并上传多张图片#v1.0", notes = "新增主题，并上传多张图片#v1.0")
-	@RequestMapping(value = "/new/images", method = RequestMethod.POST)
-	public JsonResult _batchUploadFile(Topic topic,
+	@ApiOperation(value = "新增主题，并上传多张图片到自有服务器#v1.0", notes = "新增主题，并上传多张图片#v1.0")
+	@RequestMapping(value = "/new/imagestolocalserver", method = RequestMethod.POST)
+	public JsonResult _batchUploadFile1(Topic topic,
 			@RequestParam(value = "file", required = false) CommonsMultipartFile[] file, HttpServletRequest request) {
 		try {
 			// 判断文件是否为空
@@ -194,6 +199,41 @@ public class TopicController extends BaseController {
 			}
 			topic.setReplynum(0);
 			topic.setCreatedby(getCurrentUserId());
+			topic.setCreatedon(System.currentTimeMillis() / 1000);
+			this.topicService.add(topic);
+			Topic newtopic = this.topicService.findById(topic.getId());
+			return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN, newtopic);
+		} catch (Exception e) {
+			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);
+		}
+	}
+	
+	@ApiOperation(value = "新增主题，并上传多张图片到七牛云服务器#v1.0", notes = "新增主题，并上传多张图片#v1.0")
+	@RequestMapping(value = "/new/images", method = RequestMethod.POST)
+	public JsonResult _batchUploadFile2(Topic topic,
+			@RequestParam(value = "file", required = false) CommonsMultipartFile[] file, HttpServletRequest request) {
+		try {
+			String httpName = "http://od8rh27zr.bkt.clouddn.com";//qiniu
+			String bucketName = "ommasters";//qiniu
+			// 判断文件是否为空
+			if (file != null && file.length > 0) {
+				ArrayList<String> imageList = new ArrayList<String>();
+
+				for (int i = 0; i < file.length; i++) {
+					String name = file[i].getOriginalFilename();
+					String last = name.substring(name.lastIndexOf(".") + 1);
+					 // 上传到七牛后保存的文件名
+			        String key = "topic_"+System.currentTimeMillis() + new Random(50000).nextInt()+ "." + last;
+			        byte[] fileByte = file[i].getBytes();
+			        new QiniuUpload().upload(fileByte, key, bucketName);
+					imageList.add(httpName+"/"+key);
+				}
+				String imageStr = StringUtil.join(imageList, ",");
+				topic.setImages(imageStr);
+			}
+			topic.setReplynum(0);
+			topic.setCreatedby(getCurrentUserId());
+			topic.setCreatedby(666666);
 			topic.setCreatedon(System.currentTimeMillis() / 1000);
 			this.topicService.add(topic);
 			Topic newtopic = this.topicService.findById(topic.getId());
