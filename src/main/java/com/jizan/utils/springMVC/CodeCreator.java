@@ -29,11 +29,11 @@ public class CodeCreator {
 
 	public String mapperDir;// 生成文件的存放物理目录
 
-	/*public static void main(String[] args) {
-		CodeUtil.truncateTable("tb_replies");
-		//createCodes("Tag","tb_tags");
+	public static void main(String[] args) {
+		//CodeUtil.truncateTable("tb_versions");
+		createCodes("Advertisement","tb_ads");
 	}
-*/
+
 	public static void createCodes(String entityName,String tableName){
 		//String entityName = "Tag";
 		//String tableName = "tb_tags";

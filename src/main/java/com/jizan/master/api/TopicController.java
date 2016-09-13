@@ -29,6 +29,7 @@ import com.jizan.utils.Pager;
 import com.jizan.utils.StringUtil;
 import com.jizan.utils.JsonResult;
 import com.jizan.utils.SystemConfig;
+import com.jizan.vendors.qiniu.QiniuBase;
 import com.jizan.vendors.qiniu.QiniuUpload;
 
 import io.swagger.annotations.Api;
@@ -213,8 +214,8 @@ public class TopicController extends BaseController {
 	public JsonResult _batchUploadFile2(Topic topic,
 			@RequestParam(value = "file", required = false) CommonsMultipartFile[] file, HttpServletRequest request) {
 		try {
-			String httpName = "http://od8rh27zr.bkt.clouddn.com";//qiniu
-			String bucketName = "ommasters";//qiniu
+			String httpName = QiniuBase.HttpName;//"http://od8rh27zr.bkt.clouddn.com";//qiniu
+			String bucketName =QiniuBase.BucketName;// "ommasters";//qiniu
 			// 判断文件是否为空
 			if (file != null && file.length > 0) {
 				ArrayList<String> imageList = new ArrayList<String>();
@@ -233,7 +234,6 @@ public class TopicController extends BaseController {
 			}
 			topic.setReplynum(0);
 			topic.setCreatedby(getCurrentUserId());
-			topic.setCreatedby(666666);
 			topic.setCreatedon(System.currentTimeMillis() / 1000);
 			this.topicService.add(topic);
 			Topic newtopic = this.topicService.findById(topic.getId());
