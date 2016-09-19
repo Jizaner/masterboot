@@ -7,7 +7,9 @@ public class Advertisement {
 
 	private Integer id;
 	private String imageurl;
+	private String redirecturl;
 	private String description;
+	private Integer redirectnum;
 	private String position;
 	private Long createdon;
 	private Long createdby;
@@ -28,12 +30,28 @@ public class Advertisement {
 		this.imageurl = imageurl;
 	}
 
+	public String getRedirecturl(){
+		return redirecturl;
+	}
+
+	public  void setRedirecturl(String redirecturl){
+		this.redirecturl = redirecturl;
+	}
+
 	public String getDescription(){
 		return description;
 	}
 
 	public  void setDescription(String description){
 		this.description = description;
+	}
+
+	public Integer getRedirectnum(){
+		return redirectnum;
+	}
+
+	public  void setRedirectnum(Integer redirectnum){
+		this.redirectnum = redirectnum;
 	}
 
 	public String getPosition(){

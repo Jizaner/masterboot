@@ -89,6 +89,23 @@ public class AdvertisementController {
 		return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN);
 	}
 
+	
+	/* Edit *****************/
+	@ApiOperation(value = "更新广告的点击转化数#v1.0",notes = "更新advertisement#v1.0")
+	@RequestMapping(value = "/addcount",method=RequestMethod.POST)
+	@ResponseBody
+	public JsonResult _addcount(@RequestParam(value = "id", required = true, defaultValue = "") int id) {
+		try {
+			Advertisement advertisement= this.advertisementService.findById(id);
+			int curcount=advertisement.getRedirectnum();
+			advertisement.setRedirectnum(curcount+1);
+			this.advertisementService.modify(advertisement);
+		} catch (Exception e) {
+			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);
+		}
+		return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN);
+	}
+	
 	/* Delete ***************/
 	@ApiOperation(value = "删除advertisement#v1.0",notes = "删除advertisement#v1.0")
 	@RequestMapping(value = "/delete",method=RequestMethod.POST)

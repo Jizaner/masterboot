@@ -142,6 +142,13 @@
 		select <include refid="COLUMNS" /> from tb_versions where id = #{id}
 	</select>
 
+	<!-- _____________________________________________________________________________ 7.findLatest -->
+
+	<select id="findLatest" resultMap="VersionRM">
+		select <include refid="COLUMNS" /> from tb_versions
+		order by id desc
+		limit 0,1
+	</select>
 	<!-- _____________________________________________________________________________ 10.countAll -->
 
 	<select id="countAll" resultType="integer">

@@ -30,6 +30,16 @@ public class VersionController {
 		Version version = this.versionService.findById(id);
 		return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN,version);
 	}
+	
+	/* Show ******************/
+	@ApiOperation(value = "获取最新版本号#v1.0",notes = "获取最新版本号#v1.0")
+	@RequestMapping(value = "/show/latest", method = RequestMethod.GET)
+	@ResponseBody
+	public JsonResult _showLatest() {
+		Version version = this.versionService.findLatest();
+		return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN,version);
+	}
+	
 
 	/* List ******************/
 	@ApiOperation(value = "获取全部version列表#v1.0",notes = "获取全部version列表#v1.0")

@@ -16,4 +16,9 @@ public class VersionServiceImpl extends BaseServiceImpl<Version> implements Vers
 	public BaseDao<Version> getBaseDao() {
 		return this.versionDao;
 	}
+	
+	public Version findLatest(){
+		
+		return versionDao.findLatest();
+	}
 }
