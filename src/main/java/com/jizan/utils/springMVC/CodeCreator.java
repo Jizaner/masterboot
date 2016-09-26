@@ -9,6 +9,11 @@ import java.util.List;
 
 public class CodeCreator {
 
+	public static void main(String[] args) {
+		//CodeUtil.truncateTable("tb_versions");
+		createCodes("Certification","tb_certifications");
+	}
+	
 	public String GroupId;// 项目物理目录
 
 	public String ArtifactId;// 模板物理目录
@@ -29,10 +34,7 @@ public class CodeCreator {
 
 	public String mapperDir;// 生成文件的存放物理目录
 
-	public static void main(String[] args) {
-		//CodeUtil.truncateTable("tb_versions");
-		createCodes("Advertisement","tb_ads");
-	}
+
 
 	public static void createCodes(String entityName,String tableName){
 		//String entityName = "Tag";
