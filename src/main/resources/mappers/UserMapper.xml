@@ -24,17 +24,19 @@
 		<result column = "registerlati" property = "registerlati" />
 		<result column = "registerlong" property = "registerlong" />
 		<result column = "appversion" property = "appversion" />
+		<result column = "verifiedon" property = "verifiedon" />
+		<result column = "verifiedby" property = "verifiedby" />
 	</resultMap>
 	<!-- _____________________________________________________________________________ 全部字段 -->
 	<sql id="COLUMNS">
-		id,nickname,mobile,password,realname,slogan,sex,wechat,address,email,birthday,avatar,tags,authimages,idnumber,vocation,experience,devicetoken,registertime,registerlati,registerlong,appversion
+		id,nickname,mobile,password,realname,slogan,sex,wechat,address,email,birthday,avatar,tags,authimages,idnumber,vocation,experience,devicetoken,registertime,registerlati,registerlong,appversion,verifiedon,verifiedby
 	</sql>
 
 	<!-- _____________________________________________________________________________ 1.add -->
 
 	<insert id="add" parameterType="com.jizan.master.entity.User">
-		insert into tb_users (id,nickname,mobile,password,realname,slogan,sex,wechat,address,email,birthday,avatar,tags,authimages,idnumber,vocation,experience,devicetoken,registertime,registerlati,registerlong,appversion)
-		values (#{id},#{nickname},#{mobile},#{password},#{realname},#{slogan},#{sex},#{wechat},#{address},#{email},#{birthday},#{avatar},#{tags},#{authimages},#{idnumber},#{vocation},#{experience},#{devicetoken},#{registertime},#{registerlati},#{registerlong},#{appversion})
+		insert into tb_users (id,nickname,mobile,password,realname,slogan,sex,wechat,address,email,birthday,avatar,tags,authimages,idnumber,vocation,experience,devicetoken,registertime,registerlati,registerlong,appversion,verifiedon,verifiedby)
+		values (#{id},#{nickname},#{mobile},#{password},#{realname},#{slogan},#{sex},#{wechat},#{address},#{email},#{birthday},#{avatar},#{tags},#{authimages},#{idnumber},#{vocation},#{experience},#{devicetoken},#{registertime},#{registerlati},#{registerlong},#{appversion},#{verifiedon},#{verifiedby})
 	</insert>
 
 	<!-- ______________________________________________________________________________ 2.modify -->
@@ -63,7 +65,9 @@
 		<if test="registertime != null">registertime= #{registertime},</if>
 		<if test="registerlati != null">registerlati= #{registerlati},</if>
 		<if test="registerlong != null">registerlong= #{registerlong},</if>
-		<if test="appversion != null">appversion= #{appversion}</if>
+		<if test="appversion != null">appversion= #{appversion},</if>
+		<if test="verifiedon != null">verifiedon= #{verifiedon},</if>
+		<if test="verifiedby != null">verifiedby= #{verifiedby}</if>
 		</set>
 		where id = #{id}
 	</update>
@@ -117,6 +121,8 @@
 		<if test="registerlati != null">and registerlati= #{registerlati}</if>
 		<if test="registerlong != null">and registerlong= #{registerlong}</if>
 		<if test="appversion != null">and appversion= #{appversion}</if>
+		<if test="verifiedon != null">and verifiedon= #{verifiedon}</if>
+		<if test="verifiedby != null">and verifiedby= #{verifiedby}</if>
 		</where>
 		order by registertime desc
 	</select>
@@ -148,6 +154,8 @@
 		<if test="registerlati != null">and registerlati= #{registerlati}</if>
 		<if test="registerlong != null">and registerlong= #{registerlong}</if>
 		<if test="appversion != null">and appversion= #{appversion}</if>
+		<if test="verifiedon != null">and verifiedon= #{verifiedon}</if>
+		<if test="verifiedby != null">and verifiedby= #{verifiedby}</if>
 		</where>
 		order by registertime desc
 		limit #{startIdx},#{limit}
@@ -180,6 +188,8 @@
 		<if test="registerlati != null">and registerlati= #{registerlati}</if>
 		<if test="registerlong != null">and registerlong= #{registerlong}</if>
 		<if test="appversion != null">and appversion= #{appversion}</if>
+		<if test="verifiedon != null">and verifiedon= #{verifiedon}</if>
+		<if test="verifiedby != null">and verifiedby= #{verifiedby}</if>
 		</where>
 	</select>
 
@@ -210,6 +220,8 @@
 		<if test="registerlati != null">and registerlati= #{registerlati}</if>
 		<if test="registerlong != null">and registerlong= #{registerlong}</if>
 		<if test="appversion != null">and appversion= #{appversion}</if>
+		<if test="verifiedon != null">and verifiedon= #{verifiedon}</if>
+		<if test="verifiedby != null">and verifiedby= #{verifiedby}</if>
 		</where>
 	</select>
 
@@ -252,6 +264,8 @@
 		<if test="registerlati != null">and registerlati= #{registerlati}</if>
 		<if test="registerlong != null">and registerlong= #{registerlong}</if>
 		<if test="appversion != null">and appversion= #{appversion}</if>
+		<if test="verifiedon != null">and verifiedon= #{verifiedon}</if>
+		<if test="verifiedby != null">and verifiedby= #{verifiedby}</if>
 		</where>
 	</select>
 	<!-- ******************Other Mappers****************** -->

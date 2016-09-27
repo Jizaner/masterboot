@@ -2,6 +2,8 @@ package com.jizan.master.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
 
@@ -27,6 +29,8 @@ public class User {
 	private String registerlati;
 	private String registerlong;
 	private String appversion;
+	private Long verifiedon;
+	private Integer verifiedby;
 
 	public Integer getId(){
 		return id;
@@ -202,6 +206,22 @@ public class User {
 
 	public void setIdnumber(String idnumber) {
 		this.idnumber = idnumber;
+	}
+
+	public Long getVerifiedon() {
+		return verifiedon;
+	}
+
+	public void setVerifiedon(Long verifiedon) {
+		this.verifiedon = verifiedon;
+	}
+
+	public Integer getVerifiedby() {
+		return verifiedby;
+	}
+
+	public void setVerifiedby(Integer verifiedby) {
+		this.verifiedby = verifiedby;
 	}
 
 
