@@ -79,7 +79,7 @@ public class QiniuUpload {
      * 主函数：程序入口，测试功能
      * @param args
      */
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         // 上传文件的路径，因为在Mac下，所以路径和windows下不同
         String filePath = "C:/bg.jpg";
         // 要上传的空间
@@ -88,5 +88,5 @@ public class QiniuUpload {
         String key = "topicname_"+System.currentTimeMillis() + new Random(50000).nextInt();
 
         new QiniuUpload().uploadFile(filePath, key, bucketName);
-    }
+    }*/
 }

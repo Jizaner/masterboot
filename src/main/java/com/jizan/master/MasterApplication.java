@@ -20,6 +20,7 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
@@ -37,6 +38,12 @@ import javax.sql.DataSource;
 
 	private static Logger logger = Logger.getLogger(MasterApplication.class);
 
+	@RequestMapping(value = {"/",""})
+	public String helloboot(){
+		
+		return "hello boot !!" ;
+	}
+	
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		// 使用SpringBoot应用程序启动
@@ -87,6 +94,6 @@ import javax.sql.DataSource;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MasterApplication.class, args);
-		logger.info("============= SpringBoot Start Success =============");
+		logger.info("=== SpringBoot Start Success ===");
 	}
 }

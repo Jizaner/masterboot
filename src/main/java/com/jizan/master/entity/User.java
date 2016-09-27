@@ -9,7 +9,7 @@ public class User {
 	private String nickname;
 	private Long mobile;
 	private String password;
-	private String truename;
+	private String realname;
 	private String slogan;
 	private Integer sex;
 	private String wechat;
@@ -18,7 +18,8 @@ public class User {
 	private String birthday;
 	private String avatar;
 	private String tags;
-	private String certification;
+	private String authimages;
+	private String idnumber;
 	private String vocation;
 	private Integer experience;
 	private String devicetoken;
@@ -51,12 +52,12 @@ public class User {
 		this.password = password;
 	}
 
-	public String getTruename(){
-		return truename;
+	public String getRealname(){
+		return realname;
 	}
 
-	public  void setTruename(String truename){
-		this.truename = truename;
+	public  void setRealname(String realname){
+		this.realname = realname;
 	}
 
 	public String getSlogan(){
@@ -123,12 +124,12 @@ public class User {
 		this.tags = tags;
 	}
 
-	public String getCertification(){
-		return certification;
+	public String getAuthimages(){
+		return authimages;
 	}
 
-	public  void setCertification(String certification){
-		this.certification = certification;
+	public  void setAuthimages(String authimages){
+		this.authimages = authimages;
 	}
 
 	public String getVocation(){
@@ -193,6 +194,14 @@ public class User {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	public String getIdnumber() {
+		return idnumber;
+	}
+
+	public void setIdnumber(String idnumber) {
+		this.idnumber = idnumber;
 	}
 
 
