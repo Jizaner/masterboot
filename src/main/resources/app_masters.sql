@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2016-09-28 00:53:28
+Date: 2016-09-30 00:42:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -52,15 +52,13 @@ CREATE TABLE `tb_certifications` (
   `verifiedon` bigint(20) DEFAULT NULL,
   `verifiedby` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of tb_certifications
 -- ----------------------------
-INSERT INTO `tb_certifications` VALUES ('33', '思科CCIE认证', 'person', '100000000001', null, 'upload/certification/person/cert_14749685472671291210300.png', '1474968566', '10000012', '111', null);
-INSERT INTO `tb_certifications` VALUES ('34', '北京瑞宁智远科技有限公司', 'company', '100000', null, 'upload/certification/company/company_cert_14749686142731291210300.png', '1474968616', '10000012', null, null);
-INSERT INTO `tb_certifications` VALUES ('35', '数据库专家', 'person', '1111', null, 'upload/certification/person/cert_14749701036851291210300.png', '1474970106', '10000012', null, null);
-INSERT INTO `tb_certifications` VALUES ('36', '111111', 'person', '11111', null, 'upload/certification/person/cert_14749708791401291210300.png', '1474970880', '10000012', null, null);
+INSERT INTO `tb_certifications` VALUES ('37', '思科CCIE认证', 'person', '10086', null, 'upload/certification/person/cert_14750570217231291210300.png', '1475057023', '10000012', '1', null);
+INSERT INTO `tb_certifications` VALUES ('39', '北京瑞宁智远科技有限公司', 'company', '123123', null, 'upload/certification/company/company_cert_14750587815341291210300.png', '1475058783', '10000012', null, null);
 
 -- ----------------------------
 -- Table structure for `tb_favorites`
@@ -73,7 +71,7 @@ CREATE TABLE `tb_favorites` (
   `createdby` bigint(11) DEFAULT NULL,
   `createdon` bigint(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of tb_favorites
@@ -82,6 +80,8 @@ INSERT INTO `tb_favorites` VALUES ('60', '149', 'topic', '10000012', '1473218508
 INSERT INTO `tb_favorites` VALUES ('61', '147', 'topic', '10000012', '1473320044');
 INSERT INTO `tb_favorites` VALUES ('62', '1', 'news', '10000012', '1473393440');
 INSERT INTO `tb_favorites` VALUES ('63', '1', 'news', '10000029', '1473665595');
+INSERT INTO `tb_favorites` VALUES ('64', '187', 'topic', '10000012', '1475142012');
+INSERT INTO `tb_favorites` VALUES ('65', '180', 'topic', '10000012', '1475146594');
 
 -- ----------------------------
 -- Table structure for `tb_feedbacks`
@@ -95,7 +95,7 @@ CREATE TABLE `tb_feedbacks` (
   `createdby` bigint(11) DEFAULT NULL,
   `createdon` bigint(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of tb_feedbacks
@@ -108,6 +108,31 @@ INSERT INTO `tb_feedbacks` VALUES ('7', '312312', 'upload/feedback/1471597181797
 INSERT INTO `tb_feedbacks` VALUES ('8', '13', 'upload/feedback/14715972309401291210300.png', null, null, null);
 INSERT INTO `tb_feedbacks` VALUES ('9', '尺寸长还问我', null, null, '10000027', '1473664505');
 INSERT INTO `tb_feedbacks` VALUES ('10', '尺寸长还问我', null, null, '10000027', '1473664505');
+INSERT INTO `tb_feedbacks` VALUES ('11', null, 'upload/temp14751317195101291210300.png', null, null, '1475131725');
+INSERT INTO `tb_feedbacks` VALUES ('12', null, 'upload/temp14751317607441291210300.png', null, null, '1475131763');
+INSERT INTO `tb_feedbacks` VALUES ('13', null, '1476425601539.png', null, null, '1475134399');
+INSERT INTO `tb_feedbacks` VALUES ('14', null, '1476427155249.png', null, null, '1475135944');
+INSERT INTO `tb_feedbacks` VALUES ('15', null, '1476427184297.png', null, null, '1475135974');
+INSERT INTO `tb_feedbacks` VALUES ('16', null, 'upload/temp/14751362643471291210300.png', null, null, '1475136264');
+INSERT INTO `tb_feedbacks` VALUES ('17', null, '1476428690214.png', null, null, '1475137479');
+INSERT INTO `tb_feedbacks` VALUES ('18', null, '1476429191451.png', null, null, '1475137981');
+INSERT INTO `tb_feedbacks` VALUES ('19', null, '/upload/temp14751385774201291210300.png', null, null, '1475138628');
+INSERT INTO `tb_feedbacks` VALUES ('20', null, '1476430253319.png', null, null, '1475139047');
+INSERT INTO `tb_feedbacks` VALUES ('21', null, '/upload/temp14751392959741291210300.png', null, null, '1475139299');
+INSERT INTO `tb_feedbacks` VALUES ('22', null, '/upload/temp/14751398550131291210300.png', null, null, '1475139859');
+INSERT INTO `tb_feedbacks` VALUES ('23', null, '/upload/temp/14751399778811291210300.png', null, null, '1475139980');
+INSERT INTO `tb_feedbacks` VALUES ('24', null, '/upload/temp/14751400548511291210300.png', null, null, '1475140057');
+INSERT INTO `tb_feedbacks` VALUES ('25', '我们在这里我要', 'http://od8rh27zr.bkt.clouddn.com/feedback_14751422143711291210300.png,http://od8rh27zr.bkt.clouddn.com/feedback_14751422170621291210300.png', null, '10000012', '1475142217');
+INSERT INTO `tb_feedbacks` VALUES ('26', '我们在这里我要', 'http://od8rh27zr.bkt.clouddn.com/feedback_14751422145891291210300.png,http://od8rh27zr.bkt.clouddn.com/feedback_14751422177001291210300.png', null, '10000012', '1475142218');
+INSERT INTO `tb_feedbacks` VALUES ('27', null, '/upload/feedback/14751444520061291210300.png', null, null, '1475144452');
+INSERT INTO `tb_feedbacks` VALUES ('28', null, '/upload/feedback/14751510867431291210300.png', null, null, '1475151086');
+INSERT INTO `tb_feedbacks` VALUES ('29', null, '/upload/feedback/14751511043681291210300.png', null, null, '1475151104');
+INSERT INTO `tb_feedbacks` VALUES ('30', null, '/upload/feedback/14751511106781291210300.png', null, null, '1475151110');
+INSERT INTO `tb_feedbacks` VALUES ('31', null, '/upload/feedback/14751511108771291210300.png', null, null, '1475151110');
+INSERT INTO `tb_feedbacks` VALUES ('32', null, '/upload/feedback/14751511110691291210300.png', null, null, '1475151111');
+INSERT INTO `tb_feedbacks` VALUES ('33', null, '/upload/feedback/14751511112851291210300.png', null, null, '1475151111');
+INSERT INTO `tb_feedbacks` VALUES ('34', null, '/upload/feedback/14751511115001291210300.png', null, null, '1475151111');
+INSERT INTO `tb_feedbacks` VALUES ('35', null, '/upload/feedback/14751511117211291210300.png', null, null, '1475151111');
 
 -- ----------------------------
 -- Table structure for `tb_news`
@@ -173,7 +198,7 @@ CREATE TABLE `tb_replies` (
   `createdby` bigint(11) DEFAULT NULL,
   `createdon` bigint(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of tb_replies
@@ -185,6 +210,8 @@ INSERT INTO `tb_replies` VALUES ('12', '刚回家后发现我的微博已经开�
 INSERT INTO `tb_replies` VALUES ('13', '比那些年那些那些年才能你猜你猜你猜你的你呢对那些浓浓淡淡百般刁难东南西北不咸不淡那些年相比是你内心你承诺', '175', '10000027', '1473664971');
 INSERT INTO `tb_replies` VALUES ('14', '好玩儿呀', '180', '10000029', '1473665222');
 INSERT INTO `tb_replies` VALUES ('15', 'Huuyuhhihijkjkkkj ', '180', '10000027', '1473845369');
+INSERT INTO `tb_replies` VALUES ('16', '雨后部分', '187', '10000012', '1475123830');
+INSERT INTO `tb_replies` VALUES ('17', 'Vbmvffjk', '187', '10000027', '1475149549');
 
 -- ----------------------------
 -- Table structure for `tb_tags`
@@ -228,39 +255,6 @@ CREATE TABLE `tb_topics` (
 -- ----------------------------
 -- Records of tb_topics
 -- ----------------------------
-INSERT INTO `tb_topics` VALUES ('145', 'New. Question!', 'High', 'upload/topic/14731548384061291210300.png', '标签', '0', '1473154838', '10000012');
-INSERT INTO `tb_topics` VALUES ('146', 'Two pictures', 'Two pictures', 'upload/topic/14731548705471291210300.png,upload/topic/14731548705531291210300.png', '标签', '5', '1473154870', '10000012');
-INSERT INTO `tb_topics` VALUES ('147', 'Three pictures', '33333', 'upload/topic/14731549228861291210300.png,upload/topic/14731549228911291210300.png,upload/topic/14731549228951291210300.png', '标签', '3', '1473154922', '10000012');
-INSERT INTO `tb_topics` VALUES ('148', 'No picture', 'NO', null, '标签', '2', '1473154956', '10000012');
-INSERT INTO `tb_topics` VALUES ('149', 'Picture', 'Picture ', 'upload/topic/14731550204411291210300.png', '标签', '2', '1473155020', '10000012');
-INSERT INTO `tb_topics` VALUES ('150', 'Topic ', 'Topic', null, '标签', '2', '1473155208', '10000012');
-INSERT INTO `tb_topics` VALUES ('151', 'four pictures', 'Four', 'upload/topic/14732141945471291210300.png,upload/topic/14732141945551291210300.png,upload/topic/14732141949121291210300.png,upload/topic/14732141949221291210300.png', '标签', '4', '1473214194', '10000012');
-INSERT INTO `tb_topics` VALUES ('152', '问题是不是很多人生哲理的话', '这样就要来源的士都江堰水利工程和他一起来吧？我是有点不过你是一定的话。我们的心里只有我一个人在一起了。我们都会被迫取消了关注我吧。我是一个人的确很久没有关系。我们都市全部的话。我是', null, '标签', '6', '1473215117', '10000012');
-INSERT INTO `tb_topics` VALUES ('153', '玩儿的话可以理解为什么有人会说', '我们的话可以理解为什么有人会说我们的话可以理解为什么有人会说我们的话可以理解为什么有人会说我们的话可以理解为什么有人会说', 'upload/topic/14732151978011291210300.png', '标签', '6', '1473215197', '10000012');
-INSERT INTO `tb_topics` VALUES ('154', '3张飒飒是否健康', '啊是大是大非', 'upload/topic/14734054112971291210300.png,upload/topic/14734054113041291210300.png,upload/topic/14734054113061291210300.png', '标签', '0', '1473405411', '10000012');
-INSERT INTO `tb_topics` VALUES ('155', '四张图片的', '啊飒飒说的', 'upload/topic/14734055967541291210300.png,upload/topic/14734055967651291210300.png,upload/topic/14734055967701291210300.png,upload/topic/14734055967951291210300.png,upload/topic/14734055971311291210300.png', '标签', '0', '1473405597', '10000012');
-INSERT INTO `tb_topics` VALUES ('156', '5张啊大煞风景', '阿道夫是撒地方', 'upload/topic/14734056431871291210300.png,upload/topic/14734056431901291210300.png,upload/topic/14734056431921291210300.png,upload/topic/14734056431951291210300.png,upload/topic/14734056431981291210300.png', '标签', '0', '1473405643', '10000012');
-INSERT INTO `tb_topics` VALUES ('157', '3333333', '', 'upload/topic/14734070531461291210300.png,upload/topic/14734070531501291210300.png,upload/topic/14734070531531291210300.png', '标签', '0', '1473407053', '10000012');
-INSERT INTO `tb_topics` VALUES ('158', '两张图片啊', '', 'upload/topic/14734071247771291210300.png,upload/topic/14734071247901291210300.png', '标签', '0', '1473407124', '10000012');
-INSERT INTO `tb_topics` VALUES ('159', '三张图屁似的', '撒旦', 'upload/topic/14734071698361291210300.png,upload/topic/14734071698391291210300.png,upload/topic/14734071698411291210300.png,upload/topic/14734071698461291210300.png', '标签', '0', '1473407169', '10000012');
-INSERT INTO `tb_topics` VALUES ('160', '查查阿斯顿发生的', '阿斯顿发', 'upload/topic/14734117953231291210300.png', '标签', '0', '1473411795', '10000012');
-INSERT INTO `tb_topics` VALUES ('161', '我们在这里的一切都是你是', '我们在这里我要做', 'upload/topic/14734131781591291210300.png,upload/topic/14734131781621291210300.png,upload/topic/14734131781651291210300.png,upload/topic/14734131781671291210300.png,upload/topic/14734131781711291210300.png,upload/topic/14734131781741291210300.png', '标签', '0', '1473413178', '10000012');
-INSERT INTO `tb_topics` VALUES ('162', '我们限制上传六张照片', '企鹅万人', 'upload/topic/14734141885081291210300.png,upload/topic/14734141885121291210300.png,upload/topic/14734141885151291210300.png,upload/topic/14734141885191291210300.png,upload/topic/14734141885231291210300.png,upload/topic/14734141885281291210300.png', '标签', '0', '1473414188', '10000012');
-INSERT INTO `tb_topics` VALUES ('163', '五张照片试试', '五张照片', 'upload/topic/14734142916251291210300.png,upload/topic/14734142916281291210300.png,upload/topic/14734142916311291210300.png,upload/topic/14734142916341291210300.png,upload/topic/14734142916361291210300.png', '标签', '0', '1473414291', '10000012');
-INSERT INTO `tb_topics` VALUES ('164', '晚上吃什么', '纯纯粹粹次', 'upload/topic/14734157775861291210300.png,upload/topic/14734157775891291210300.png,upload/topic/14734157775931291210300.png,upload/topic/14734157775971291210300.png,upload/topic/14734157776011291210300.png,upload/topic/14734157776051291210300.png', '标签', '0', '1473415777', '10000012');
-INSERT INTO `tb_topics` VALUES ('165', null, null, 'http://od8rh27zr.bkt.clouddn.com/ommasters/topic_14734368338861291210300.png', null, '0', '1473436836', '666666');
-INSERT INTO `tb_topics` VALUES ('166', null, null, 'http://od8rh27zr.bkt.clouddn.com/topic_14734372138621291210300.jpg', null, '0', '1473437214', '666666');
-INSERT INTO `tb_topics` VALUES ('167', '中午饭吃什么', '我们', 'http://od8rh27zr.bkt.clouddn.com/topic_14736510414711291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14736510429381291210300.png', '标签', '0', '1473651044', '666666');
-INSERT INTO `tb_topics` VALUES ('168', '回复地方就会反复个', '韩国风复古', null, '标签', '0', '1473651136', '666666');
-INSERT INTO `tb_topics` VALUES ('169', '就会很久很久很久', '呵呵', 'http://od8rh27zr.bkt.clouddn.com/topic_14736512528061291210300.png', '标签', '0', '1473651253', '666666');
-INSERT INTO `tb_topics` VALUES ('170', '将韩国风复古很高很高', '看过就好', null, '标签', '0', '1473651305', '10000012');
-INSERT INTO `tb_topics` VALUES ('171', '规范化复古风格', '结果', 'http://od8rh27zr.bkt.clouddn.com/topic_14736513234131291210300.png', '标签', '0', '1473651327', '10000012');
-INSERT INTO `tb_topics` VALUES ('172', '哈利波特七本书，第一个字可以组成一句话，猜猜是什么？', '哈哈哈哈哈哈哈', 'http://od8rh27zr.bkt.clouddn.com/topic_14736523270001291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14736523304931291210300.png', '标签', '0', '1473652331', '10000012');
-INSERT INTO `tb_topics` VALUES ('173', 'The only thing ', 'I love ', 'http://od8rh27zr.bkt.clouddn.com/topic_14736542428241291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14736542445721291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14736542463741291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14736542489851291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14736542513801291210300.png', '标签', '0', '1473654254', '10000012');
-INSERT INTO `tb_topics` VALUES ('174', 'The only ', 'The first ', 'http://od8rh27zr.bkt.clouddn.com/topic_14736544211981291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14736544231651291210300.png', '标签', '0', '1473654426', '10000012');
-INSERT INTO `tb_topics` VALUES ('175', '标题提要长常常常常常常常常吃成才才才才 长长长长长长长长长长长长长长长长长长长长长长长长长长长长长', '够长了啊', 'http://od8rh27zr.bkt.clouddn.com/topic_14736557152841291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14736557158411291210300.png', '标签', '1', '1473655717', '10000012');
-INSERT INTO `tb_topics` VALUES ('176', '止盈止，我们的话可以理解为什么有人会有一个人生闷气，我们的话可以理解为什么有人会有一个人生闷气，我', '我们', null, '标签', '0', '1473661494', '10000012');
-INSERT INTO `tb_topics` VALUES ('177', '你说啥，傻傻的', '阿斯顿看见复活节卡上的回复看见阿斯顿发话就快拉上地方哈卢萨卡绝代风华拉萨的饭卡结束地方哈说看见的浪费阿斯顿发生的佛教健身卡的回复', null, '标签', '1', '1473661796', '10000012');
 INSERT INTO `tb_topics` VALUES ('178', '这个事压缩之后上传的图片', '试试效果', 'http://od8rh27zr.bkt.clouddn.com/topic_14736621803471291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14736621814171291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14736621826691291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14736621839471291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14736621850081291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14736621851791291210300.png', '标签', '2', '1473662185', '10000012');
 INSERT INTO `tb_topics` VALUES ('179', '把少男少女你说你呢对不对宝宝的时候都不是你废话都好好的别随随便便说sjjsjdnnd！', '少男少女会打扮打扮打扮淑女你说你懂不懂', 'http://od8rh27zr.bkt.clouddn.com/topic_14736643656201291210300.png', '标签', '1', '1473664366', '10000012');
 INSERT INTO `tb_topics` VALUES ('180', '我只是来测试一下', '啊这是什么意思', 'http://od8rh27zr.bkt.clouddn.com/topic_14736651733451291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14736651746251291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14736651756861291210300.png', '标签', '2', '1473665176', '10000029');
@@ -270,7 +264,7 @@ INSERT INTO `tb_topics` VALUES ('183', '解决拍照后上传编辑后的图片'
 INSERT INTO `tb_topics` VALUES ('184', '长图长图长图', '', 'http://od8rh27zr.bkt.clouddn.com/topic_14741924202461291210300.png', '标签', '0', '1474192421', '10000012');
 INSERT INTO `tb_topics` VALUES ('185', '我们一起吃饭', '', 'http://od8rh27zr.bkt.clouddn.com/topic_14741934852871291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14741934856741291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14741934861281291210300.png', '标签', '0', '1474193487', '10000012');
 INSERT INTO `tb_topics` VALUES ('186', '测试长图的', '', 'http://od8rh27zr.bkt.clouddn.com/topic_14742700475671291210300.png', '标签', '0', '1474270049', '10000012');
-INSERT INTO `tb_topics` VALUES ('187', '我们在这个', '你', 'http://od8rh27zr.bkt.clouddn.com/topic_14742789368431291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14742789372621291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14742789376151291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14742789380301291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14742789385731291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14742789387321291210300.png', '标签', '0', '1474278939', '10000012');
+INSERT INTO `tb_topics` VALUES ('187', '我们在这个', '你', 'http://od8rh27zr.bkt.clouddn.com/topic_14742789368431291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14742789372621291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14742789376151291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14742789380301291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14742789385731291210300.png,http://od8rh27zr.bkt.clouddn.com/topic_14742789387321291210300.png', '标签', '2', '1474278939', '10000012');
 
 -- ----------------------------
 -- Table structure for `tb_users`
@@ -319,7 +313,7 @@ INSERT INTO `tb_users` VALUES ('10000008', '师德师风', '1000008', '123456', 
 INSERT INTO `tb_users` VALUES ('10000009', '谁谁谁v', '1000009', '123', 'string', 'string', '0', 'string', 'string', 'string', 'string', 'resources/avatars/avatar_9.jpg', 'string', 'string', null, '', '0', 'string', '1470670536', 'string', 'string', 'string', null, null);
 INSERT INTO `tb_users` VALUES ('10000010', 'u大概', '1000010', '123', 'string', 'string', '0', 'string', 'string', 'string', 'string', 'resources/avatars/avatar_4.jpg', 'string', 'string', null, '', '0', 'string', '1470670537', 'string', 'string', 'string', null, null);
 INSERT INTO `tb_users` VALUES ('10000011', '东方国际', '1000011', '123', 'string', 'string', '0', 'string', 'string', 'string', 'string', 'resources/avatars/avatar_18.jpg', 'string', 'string', null, '', '0', 'string', '1470670537', 'string', 'string', 'string', null, null);
-INSERT INTO `tb_users` VALUES ('10000012', '我是马云', '15300086234', '111111', '000000', 'string', '0', 'string', 'string', 'string', 'string', 'upload/avatar/14736536296271291210300.png', '区块链,DevOpt', 'upload/certification/person/front_14749666396371291210300.png,upload/certification/person/reverse_14749666462781291210300.png,upload/certification/person/handing_14749666518861291210300.png', '130433199303153530', '阿里巴巴创始人', '3', 'string', '1470746199', 'string', 'string', 'string', null, null);
+INSERT INTO `tb_users` VALUES ('10000012', '我是马云', '15300086234', '111111', '大家身', 'string', '0', 'string', 'string', 'string', 'string', 'http://od8rh27zr.bkt.clouddn.com/avatar_14751429023441291210300.png', '区块链,DevOpt', 'upload/certification/person/front_14750582221411291210300.png,upload/certification/person/reverse_14750582273051291210300.png,upload/certification/person/handing_14750582329321291210300.png', '130433199303153530', '阿里巴巴创始人', '3', 'string', '1470746199', 'string', 'string', 'string', '222', null);
 INSERT INTO `tb_users` VALUES ('10000014', '嚓鱼', '13888888888', '111', null, null, null, null, null, null, null, 'upload/avatar/14718411933811291210300.png', '大数据,区块链,去IOE,DevOpt', null, null, '助理教练', '10', null, '1470974896', null, null, null, null, null);
 INSERT INTO `tb_users` VALUES ('10000015', '未设置昵称', '13800000000', '111111', null, null, null, null, null, null, null, 'resources/avatars/avatar_25.jpg', '未设置', null, null, '', '1', null, '1470997461', null, null, null, null, null);
 INSERT INTO `tb_users` VALUES ('10000016', '未设置昵称', '15300086123', '111111', null, null, null, null, null, null, null, 'resources/avatars/avatar_4.jpg', '未设置', null, null, '', '1', null, '1470997533', null, null, null, null, null);
@@ -329,7 +323,7 @@ INSERT INTO `tb_users` VALUES ('10000023', '未设置昵称', '15300087777', '12
 INSERT INTO `tb_users` VALUES ('10000024', '未设置昵称', '15300009872', '123', null, null, null, null, null, null, null, 'resources/avatars/avatar_4.jpg', '未设置', null, null, '', '1', null, '1471256761', null, null, null, null, null);
 INSERT INTO `tb_users` VALUES ('10000025', '未设置昵称', '13788888888', '111', null, null, null, null, null, null, null, 'resources/avatars/avatar_6.jpg', '未设置', null, null, '', '1', null, '1471839390', null, null, null, null, null);
 INSERT INTO `tb_users` VALUES ('10000026', '未设置昵称', '13785017990', '1', null, null, null, null, null, null, null, 'resources/avatars/avatar_6.jpg', '未设置', null, null, '', '1', null, '1471850513', null, null, null, null, null);
-INSERT INTO `tb_users` VALUES ('10000027', '你好请问', '17710919923', '123456', '未设置', '未设置', null, '未设置', '未设置', '未设置', '未设置', 'resources/avatars/avatar_1.jpg', '未设置', '', null, '', '1', null, '1471850716', null, null, null, null, null);
+INSERT INTO `tb_users` VALUES ('10000027', '你好请问', '17710919923', '123456', 'Wang', '未设置', null, '未设置', '未设置', '未设置', '未设置', 'http://od8rh27zr.bkt.clouddn.com/avatar_14751495294871291210300.png', '未设置', '(null),(null),(null)', '152123198310152791', '', '1', null, '1471850716', null, null, null, null, null);
 INSERT INTO `tb_users` VALUES ('10000028', '未设置昵称', '15101186029', '123456', null, null, null, null, null, null, null, 'resources/avatars/avatar_23.jpg', '未设置', null, null, '', '1', null, '1471850784', null, null, null, null, null);
 INSERT INTO `tb_users` VALUES ('10000029', '好人郝', '17310466497', '123456', null, '估身价，据标签（我的身价）', null, null, null, null, null, 'upload/avatar/14736650924081291210300.png', '未设置', null, null, '', '3', null, '1471850979', null, null, null, null, null);
 
@@ -351,4 +345,4 @@ CREATE TABLE `tb_versions` (
 -- ----------------------------
 -- Records of tb_versions
 -- ----------------------------
-INSERT INTO `tb_versions` VALUES ('1', '222', '添加了某某功能', '0', 'https://itunes.apple.com/cn/app/yun-wei/id1100577123?mt=8', null, null);
+INSERT INTO `tb_versions` VALUES ('1', '100', '添加了某某功能', '1', 'https://itunes.apple.com/cn/app/yun-wei/id1100577123?mt=8', null, null);
