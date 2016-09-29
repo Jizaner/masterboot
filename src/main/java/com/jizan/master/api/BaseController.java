@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +33,9 @@ public abstract class BaseController {
 		return Integer.parseInt(userid);
 	}
 
+	@Value("${spring.upload-path.base}")
+	public String baseUploadPath;//文件上传路径
+	
 	//@ApiOperation(value = "多文件上传接口#v1.0", notes = "多文件上传接口#v1.0")
 	//@RequestMapping(value = "/avatar/upload/v1", method = RequestMethod.POST)
 	public JsonResult _batchUploadFile(@RequestParam(value = "file", required = false) CommonsMultipartFile file, HttpServletRequest request) {

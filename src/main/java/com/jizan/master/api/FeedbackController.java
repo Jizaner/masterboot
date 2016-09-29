@@ -9,6 +9,7 @@ import java.util.Random;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +21,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.jizan.master.entity.Feedback;
+import com.jizan.master.entity.Topic;
 import com.jizan.master.entity.User;
 import com.jizan.master.service.FeedbackService;
 import com.jizan.utils.Pager;
 import com.jizan.utils.StringUtil;
 import com.jizan.utils.JsonResult;
 import com.jizan.utils.SystemConfig;
+import com.jizan.vendors.qiniu.QiniuBase;
+import com.jizan.vendors.qiniu.QiniuUpload;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,7 +41,11 @@ public class FeedbackController extends BaseController {
 
 	@Resource
 	private FeedbackService feedbackService;
-
+	
+	
+	
+	@Value("${spring.upload-path.feedback}")
+	private String feedbackUploadPath;
 	/* Show ******************/
 	@ApiOperation(value = "获取feedback详情#v1.0", notes = "获取feedback详情#v1.0")
 	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
@@ -135,7 +143,7 @@ public class FeedbackController extends BaseController {
 					String last = name.substring(name.lastIndexOf(".") + 1);
 					// 上传路径--文件保存路径
 					String fileRootPath = request.getSession().getServletContext().getRealPath("/");
-					String fileSubPath = "upload/feedback/" + System.currentTimeMillis() + new Random(50000).nextInt()
+					String fileSubPath = feedbackUploadPath + System.currentTimeMillis() + new Random(50000).nextInt()
 							+ "." + last;
 					File newfile = new File(fileRootPath, fileSubPath);
 					file[i].transferTo(newfile);
@@ -164,9 +172,9 @@ public class FeedbackController extends BaseController {
 				String name = file.getOriginalFilename();
 				String last = name.substring(name.lastIndexOf(".") + 1);
 				// 上传路径--文件保存路径
-				String fileRootPath = request.getSession().getServletContext().getRealPath("/");
-				String fileSubPath = "upload/feedback/" + System.currentTimeMillis() + new Random(50000).nextInt() + "."
-						+ last;
+				//String fileRootPath = request.getSession().getServletContext().getRealPath("/");
+				String fileRootPath = request.getSession().getServletContext().getRealPath("/")+baseUploadPath;//
+				String fileSubPath = feedbackUploadPath +  System.currentTimeMillis() + new Random(50000).nextInt() + "." + last;
 				File newfile = new File(fileRootPath, fileSubPath);
 				file.transferTo(newfile);
 				imageList.add(fileSubPath);
@@ -174,7 +182,39 @@ public class FeedbackController extends BaseController {
 				feedback.setImages(imageStr);
 			}
 			feedback.setCreatedon(System.currentTimeMillis() / 1000);
+			//feedback.setCreatedby(getCurrentUserId());
+			this.feedbackService.add(feedback);
+			return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN);
+		} catch (Exception e) {
+			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);
+		}
+	}
+	
+	@ApiOperation(value = "新增feedback，并上传多张图片到七牛云服务器#v1.0", notes = "新增主题，并上传多张图片#v1.0")
+	@RequestMapping(value = "/new/images/v2", method = RequestMethod.POST)
+	public JsonResult _batchUploadFileV2(Feedback feedback,
+			@RequestParam(value = "file", required = false) CommonsMultipartFile[] file, HttpServletRequest request) {
+		try {
+			String httpName = QiniuBase.HttpName;//"http://od8rh27zr.bkt.clouddn.com";//qiniu
+			String bucketName =QiniuBase.BucketName;// "ommasters";//qiniu
+			// 判断文件是否为空
+			if (file != null && file.length > 0) {
+				ArrayList<String> imageList = new ArrayList<String>();
+
+				for (int i = 0; i < file.length; i++) {
+					String name = file[i].getOriginalFilename();
+					String last = name.substring(name.lastIndexOf(".") + 1);
+					 // 上传到七牛后保存的文件名
+			        String key = "feedback_"+System.currentTimeMillis() + new Random(50000).nextInt()+ "." + last;
+			        byte[] fileByte = file[i].getBytes();
+			        new QiniuUpload().upload(fileByte, key, bucketName);
+					imageList.add(httpName+"/"+key);
+				}
+				String imageStr = StringUtil.join(imageList, ",");
+				feedback.setImages(imageStr);
+			}
 			feedback.setCreatedby(getCurrentUserId());
+			feedback.setCreatedon(System.currentTimeMillis() / 1000);
 			this.feedbackService.add(feedback);
 			return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN);
 		} catch (Exception e) {

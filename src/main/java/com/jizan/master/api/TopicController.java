@@ -14,6 +14,7 @@ import java.util.Random;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,9 @@ public class TopicController extends BaseController {
 	@Resource
 	private TopicService topicService;
 
+	@Value("${spring.upload-path.topic}")
+	private String topicUploadPath;//把properties文件中的spring.profiles.active注入到变量profileActive中
+	
 	/* Show ******************/
 
 	@ApiOperation(value = "获取topic详情#v1.0", notes = "获取topic详情#v1.0")
@@ -188,8 +192,8 @@ public class TopicController extends BaseController {
 					String name = file[i].getOriginalFilename();
 					String last = name.substring(name.lastIndexOf(".") + 1);
 					// 上传路径--文件保存路径
-					String fileRootPath = request.getSession().getServletContext().getRealPath("/");
-					String fileSubPath = "upload/topic/" + System.currentTimeMillis() + new Random(50000).nextInt()
+					String fileRootPath = request.getSession().getServletContext().getRealPath("/")+baseUploadPath;
+					String fileSubPath = topicUploadPath + System.currentTimeMillis() + new Random(50000).nextInt()
 							+ "." + last;
 					File newfile = new File(fileRootPath, fileSubPath);
 					file[i].transferTo(newfile);
@@ -211,7 +215,7 @@ public class TopicController extends BaseController {
 	
 	@ApiOperation(value = "新增主题，并上传多张图片到七牛云服务器#v1.0", notes = "新增主题，并上传多张图片#v1.0")
 	@RequestMapping(value = "/new/images", method = RequestMethod.POST)
-	public JsonResult _batchUploadFile2(Topic topic,
+	public JsonResult _batchUploadFileV2(Topic topic,
 			@RequestParam(value = "file", required = false) CommonsMultipartFile[] file, HttpServletRequest request) {
 		try {
 			String httpName = QiniuBase.HttpName;//"http://od8rh27zr.bkt.clouddn.com";//qiniu

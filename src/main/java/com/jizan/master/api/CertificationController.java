@@ -10,6 +10,7 @@ import java.util.Random;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -33,6 +34,8 @@ public class CertificationController extends BaseController {
 
 	@Resource
 	private CertificationService certificationService;
+	@Value("${spring.upload-path.certification}")
+	private String certUploadPath;
 
 	/* Show ******************/
 	@ApiOperation(value = "根据ID获取certification#v1.0",notes = "根据ID获取certification#v1.0")
@@ -141,8 +144,8 @@ public class CertificationController extends BaseController {
 					String name = file[i].getOriginalFilename();
 					String last = name.substring(name.lastIndexOf(".") + 1);
 					// 上传路径--文件保存路径
-					String fileRootPath = request.getSession().getServletContext().getRealPath("/");
-					String fileSubPath = "upload/certification/"+certtype+"/" +imagetype+ "_"+System.currentTimeMillis() + new Random(50000).nextInt()
+					String fileRootPath = request.getSession().getServletContext().getRealPath("/")+baseUploadPath;
+					String fileSubPath = certUploadPath+certtype+"/" +imagetype+ "_"+System.currentTimeMillis() + new Random(50000).nextInt()
 							+ "." + last;
 					File newfile = new File(fileRootPath, fileSubPath);
 					file[i].transferTo(newfile);

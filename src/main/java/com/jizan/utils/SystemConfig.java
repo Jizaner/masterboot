@@ -3,6 +3,7 @@ package com.jizan.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -32,7 +33,6 @@ public class SystemConfig {
 	public static final String IMAGE_SAVE_PATH = "aaaaa";
 	public static final String IMAGE_RELATIVE_SAVE_PATH = "bbbb";
 	
-	
 	/*public static void main(String[] args){
 		String argas="{\"tags\":[\"安全\",\"大数据\",\"区块链\"]}";
 		
@@ -41,4 +41,5 @@ public class SystemConfig {
 		
 		System.out.println(StringUtil.join(likes, ","));
 	}*/
+	
 }

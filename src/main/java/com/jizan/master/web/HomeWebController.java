@@ -15,7 +15,7 @@ public class HomeWebController {
 
 	@RequestMapping("/demo")
 	public String _doView() {
-		return "/demo/test";
+		return "/angulr/index";
 	}
 
 	@RequestMapping(value = "/greeting", method = RequestMethod.GET)

@@ -1,6 +1,7 @@
 package com.jizan.master.api;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,14 +12,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.alibaba.fastjson.*;
+import com.jizan.master.entity.Topic;
 import com.jizan.master.entity.User;
 import com.jizan.master.service.UserService;
 import com.jizan.utils.*;
+import com.jizan.vendors.qiniu.QiniuBase;
+import com.jizan.vendors.qiniu.QiniuUpload;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +35,9 @@ public class UserController extends BaseController {
 
 	@Resource
 	private UserService userService;
-	
+	@Value("${spring.upload-path.avatar}")
+	private String avatarUploadPath;
+
 	/* Show ******************/
 	@ApiOperation(value = "获取user详情#v1.0", notes = "获取user详情#v1.0")
 	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
@@ -45,16 +52,16 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/me", method = RequestMethod.GET)
 	@ResponseBody
 	public JsonResult _showMe() {
-	if (getCurrentUserId()!=null) {
-		User user = this.userService.findById(getCurrentUserId());
-		if (user!=null) {
-			return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN, user);
+		if (getCurrentUserId() != null) {
+			User user = this.userService.findById(getCurrentUserId());
+			if (user != null) {
+				return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN, user);
+			}
+			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.NOT_FOUND, "查找不到该用户信息！");
 		}
-			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.NOT_FOUND,"查找不到该用户信息！");
+		return new JsonResult(SystemConfig.DEFEAT, SystemConfig.ERROR, "用户ID不能为空！");
 	}
-	return new JsonResult(SystemConfig.DEFEAT, SystemConfig.ERROR,"用户ID不能为空！");
-	}
-	
+
 	/* List ******************/
 	@ApiOperation(value = "获取user列表#v1.0", notes = "获取user列表#v1.0")
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
@@ -90,8 +97,8 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public JsonResult _new(@RequestBody User user) {
 		try {
-			JsonResult result=_exist(user.getMobile());
-			if(result.getCode()==SystemConfig.NOT_FOUND){
+			JsonResult result = _exist(user.getMobile());
+			if (result.getCode() == SystemConfig.NOT_FOUND) {
 				if (user.getAvatar() == null || user.getAvatar() == "" || user.getAvatar().equals("")) {
 					Random ram = new Random();
 					user.setAvatar("resources/avatars/avatar_" + Math.abs(ram.nextInt() % 31) + ".jpg");// 取0~30之间的随机数
@@ -99,7 +106,7 @@ public class UserController extends BaseController {
 				user.setRegistertime(System.currentTimeMillis() / 1000);
 				this.userService.add(user);
 				return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN);
-			}else{
+			} else {
 				return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXIST);
 			}
 		} catch (Exception e) {
@@ -116,13 +123,13 @@ public class UserController extends BaseController {
 		try {
 			user.setId(getCurrentUserId());
 			this.userService.modify(user);
-			User latestUser=this.userService.findBy(user);
-			return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN,latestUser);
+			User latestUser = this.userService.findBy(user);
+			return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN, latestUser);
 		} catch (Exception e) {
 			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);
 		}
 	}
-	
+
 	/* Edit *****************/
 	// @Deprecated
 	@ApiOperation(value = "更新user#v1.0", notes = "更新user#v1.0")
@@ -130,21 +137,22 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public JsonResult _updateTags(@RequestBody String usertags) {
 		try {
-			//String tags="{\"tags\":[\"安全\",\"大数据\",\"区块链\"],"userid":10000003}";
-			JSONObject jo=JSON.parseObject(usertags);
+			// String
+			// tags="{\"tags\":[\"安全\",\"大数据\",\"区块链\"],"userid":10000003}";
+			JSONObject jo = JSON.parseObject(usertags);
 			/* int userid=Integer.valueOf(jo.getString("userid")); */
-			JSONArray likes=jo.getJSONArray("tags");
-			User user= this.userService.findById(getCurrentUserId());
-			if (user!=null) {
+			JSONArray likes = jo.getJSONArray("tags");
+			User user = this.userService.findById(getCurrentUserId());
+			if (user != null) {
 				user.setTags(StringUtil.join(likes, ","));
 				this.userService.modify(user);
-				return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN,user);
+				return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN, user);
 			}
-			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.ERROR,"用户不存在，操作失败！");
+			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.ERROR, "用户不存在，操作失败！");
 		} catch (Exception e) {
 			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);
 		}
-		
+
 	}
 
 	/* Delete ***************/
@@ -173,12 +181,14 @@ public class UserController extends BaseController {
 			User user = new User();
 			user.setMobile(mobile);
 			user.setPassword(password);
-			User resultUser=this.userService.findBy(user);
+			User resultUser = this.userService.findBy(user);
 			if (null != resultUser) {
-			      /*HttpSession session = request.getSession();
-			      session.setAttribute("userid", user.getId());*/
-			      
-				return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN,resultUser);
+				/*
+				 * HttpSession session = request.getSession();
+				 * session.setAttribute("userid", user.getId());
+				 */
+
+				return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN, resultUser);
 			}
 		} catch (Exception e) {
 			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);
@@ -193,11 +203,11 @@ public class UserController extends BaseController {
 		try {
 			User user = new User();
 			user.setMobile(mobile);
-			Map<String, Long> paramMap= new HashMap<String, Long> ();
+			Map<String, Long> paramMap = new HashMap<String, Long>();
 			paramMap.put("mobile", mobile);
 			if (null != this.userService.findByMap(paramMap)) {
 				return new JsonResult(SystemConfig.SUCCESS, SystemConfig.EXIST);
-			}else{
+			} else {
 				return new JsonResult(SystemConfig.DEFEAT, SystemConfig.NOT_FOUND);
 			}
 		} catch (Exception e) {
@@ -228,7 +238,8 @@ public class UserController extends BaseController {
 	@Deprecated
 	@ApiOperation(value = "上传头像接口#v1.0", notes = "上传新头像#v1.0")
 	@RequestMapping(value = "/avatar/upload/v1", method = RequestMethod.POST)
-	public JsonResult _uploadAvatar(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) {
+	public JsonResult _uploadAvatar(@RequestParam(value = "file", required = false) MultipartFile file,
+			HttpServletRequest request) {
 		// 判断文件是否为空
 		if (!file.isEmpty()) {
 			try {
@@ -237,7 +248,7 @@ public class UserController extends BaseController {
 				// 获取后缀名
 				String last = name.substring(name.lastIndexOf(".") + 1);
 				// 上传路径--文件保存路径
-				String fileRootPath = request.getSession().getServletContext().getRealPath("/");
+				String fileRootPath = request.getSession().getServletContext().getRealPath("/") + baseUploadPath;
 				String fileSubPath = "upload/avatar/" + System.currentTimeMillis() + new Random(50000).nextInt() + "."
 						+ last;
 				File newfile = new File(fileRootPath, fileSubPath);
@@ -246,49 +257,80 @@ public class UserController extends BaseController {
 					file.transferTo(newfile);
 					currentUser.setAvatar(fileSubPath);
 					this.userService.modify(currentUser);
-					return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN,currentUser);
+					return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN, currentUser);
 				}
-				return new JsonResult(SystemConfig.DEFEAT, SystemConfig.NOT_FOUND,"用户信息不存在！");
+				return new JsonResult(SystemConfig.DEFEAT, SystemConfig.NOT_FOUND, "用户信息不存在！");
 			} catch (Exception e) {
-				return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION,e);
+				return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);
 			}
 		}
-		return new JsonResult(SystemConfig.DEFEAT, SystemConfig.FAILURE,"头像传输失败！");
+		return new JsonResult(SystemConfig.DEFEAT, SystemConfig.FAILURE, "头像传输失败！");
 	}
 
 	@ApiOperation(value = "头像文件上传接口#v2.0", notes = "多文件上传接口#v2.0")
 	@RequestMapping(value = "/avatar/upload/v2", method = RequestMethod.POST)
-	public JsonResult _batchUploadFile(@RequestParam(value = "file", required = false) CommonsMultipartFile file, HttpServletRequest request) {
+	public JsonResult _batchUploadFile(@RequestParam(value = "file", required = false) CommonsMultipartFile file,
+			HttpServletRequest request) {
 		// 判断文件是否为空
-				if (!file.isEmpty()) {
-					try {
-						// 获取上传文件旧名
-						String name = file.getOriginalFilename();
-						// 获取后缀名
-						String last = name.substring(name.lastIndexOf(".") + 1);
-						// 上传路径--文件保存路径
-						String fileRootPath = request.getSession().getServletContext().getRealPath("/");
-						String fileSubPath = "upload/avatar/" + System.currentTimeMillis() + new Random(50000).nextInt() + "."
-								+ last;
-						File newfile = new File(fileRootPath, fileSubPath);
-						User currentUser = this.userService.findById(getCurrentUserId());
-						if (currentUser != null) {
-							file.transferTo(newfile);
-							currentUser.setAvatar(fileSubPath);
-							this.userService.modify(currentUser);
-							return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN,currentUser);
-						}
-						return new JsonResult(SystemConfig.DEFEAT, SystemConfig.NOT_FOUND,"用户信息不存在！");
-					} catch (Exception e) {
-						return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION,e);
-					}
+		if (!file.isEmpty()) {
+			try {
+				// 获取上传文件旧名
+				String name = file.getOriginalFilename();
+				// 获取后缀名
+				String last = name.substring(name.lastIndexOf(".") + 1);
+				// 上传路径--文件保存路径
+				String fileRootPath = request.getSession().getServletContext().getRealPath("/") + baseUploadPath;
+				String fileSubPath = avatarUploadPath + System.currentTimeMillis() + new Random(50000).nextInt() + "."
+						+ last;
+				File newfile = new File(fileRootPath, fileSubPath);
+				User currentUser = this.userService.findById(getCurrentUserId());
+				if (currentUser != null) {
+					file.transferTo(newfile);
+					currentUser.setAvatar(fileSubPath);
+					this.userService.modify(currentUser);
+					return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN, currentUser);
 				}
-				return new JsonResult(SystemConfig.DEFEAT, SystemConfig.FAILURE,"头像传输失败！");
+				return new JsonResult(SystemConfig.DEFEAT, SystemConfig.NOT_FOUND, "用户信息不存在！");
+			} catch (Exception e) {
+				return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);
+			}
+		}
+		return new JsonResult(SystemConfig.DEFEAT, SystemConfig.FAILURE, "头像传输失败！");
+	}
+
+	@ApiOperation(value = "头像上传到七牛存储", notes = "头像上传到七牛存储")
+	@RequestMapping(value = "/avatar/upload/v3", method = RequestMethod.POST)
+	public JsonResult _batchUploadFileV3(@RequestParam(value = "file", required = false) CommonsMultipartFile file,
+			HttpServletRequest request) {
+		try {
+			String httpName = QiniuBase.HttpName;
+			String bucketName = QiniuBase.BucketName;
+			// 判断文件是否为空
+			if (!file.isEmpty()) {
+				String name = file.getOriginalFilename();
+				String last = name.substring(name.lastIndexOf(".") + 1);
+				// 上传到七牛后保存的文件名
+				String key = "avatar_" + System.currentTimeMillis() + new Random(50000).nextInt() + "." + last;
+				byte[] fileByte = file.getBytes();
+				User currentUser = this.userService.findById(getCurrentUserId());
+				if (currentUser != null) {
+					new QiniuUpload().upload(fileByte, key, bucketName);
+					currentUser.setAvatar(httpName + "/" + key);
+					this.userService.modify(currentUser);
+					return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN, currentUser);
+				}
+				return new JsonResult(SystemConfig.DEFEAT, SystemConfig.NOT_FOUND, "用户信息不存在！");
+			}
+			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.NOT_FOUND, "未选择上传的文件！");
+		} catch (Exception e) {
+			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.FAILURE, "头像传输失败！");
+		}
 	}
 
 	/* 发送验证码 */
 	@RequestMapping(value = "/smscode/{mobile:\\d+}", method = RequestMethod.GET)
-	public JsonResult _smsCode(@PathVariable("mobile") long mobile, HttpServletResponse response, HttpServletRequest request) {
+	public JsonResult _smsCode(@PathVariable("mobile") long mobile, HttpServletResponse response,
+			HttpServletRequest request) {
 		try {
 			Map<String, Long> map = new HashMap<String, Long>();
 			map.put("mobile", mobile);
@@ -317,5 +359,4 @@ public class UserController extends BaseController {
 		}
 	}
 
-	
 }
