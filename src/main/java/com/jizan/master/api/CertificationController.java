@@ -147,6 +147,9 @@ public class CertificationController extends BaseController {
 					String fileRootPath = request.getSession().getServletContext().getRealPath("/")+baseUploadPath;
 					String fileSubPath = certUploadPath+certtype+"/" +imagetype+ "_"+System.currentTimeMillis() + new Random(50000).nextInt()
 							+ "." + last;
+					//String fileRootPath = request.getSession().getServletContext().getRealPath("/");
+					//String fileSubPath = "/upload/certification/"+certtype+"/" +imagetype+ "_"+System.currentTimeMillis() + new Random(50000).nextInt()
+					//		+ "." + last;
 					File newfile = new File(fileRootPath, fileSubPath);
 					file[i].transferTo(newfile);
 					imageList.add(fileSubPath);
