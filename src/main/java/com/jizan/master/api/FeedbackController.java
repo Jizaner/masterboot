@@ -172,9 +172,13 @@ public class FeedbackController extends BaseController {
 				String name = file.getOriginalFilename();
 				String last = name.substring(name.lastIndexOf(".") + 1);
 				// 上传路径--文件保存路径
-				//String fileRootPath = request.getSession().getServletContext().getRealPath("/");
-				String fileRootPath = request.getSession().getServletContext().getRealPath("/")+baseUploadPath;//
-				String fileSubPath = feedbackUploadPath +  System.currentTimeMillis() + new Random(50000).nextInt() + "." + last;
+//				String fileRootPath1 = request.getSession().getServletContext().getRealPath("/")+baseUploadPath;
+//				System.out.println(fileRootPath1);
+				String fileRootPath = request.getSession().getServletContext().getResource("/").getPath()+baseUploadPath;
+				
+				System.out.println(fileRootPath);
+				//String fileRootPath = request.getSession().getServletContext().getRealPath("/")+baseUploadPath;//
+				String fileSubPath = "upload/feedback/" +  System.currentTimeMillis() + new Random(50000).nextInt() + "." + last;
 				File newfile = new File(fileRootPath, fileSubPath);
 				file.transferTo(newfile);
 				imageList.add(fileSubPath);

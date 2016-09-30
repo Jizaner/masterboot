@@ -144,7 +144,7 @@ public class CertificationController extends BaseController {
 					String name = file[i].getOriginalFilename();
 					String last = name.substring(name.lastIndexOf(".") + 1);
 					// 上传路径--文件保存路径
-					String fileRootPath = request.getSession().getServletContext().getRealPath("/")+baseUploadPath;
+					String fileRootPath = request.getSession().getServletContext().getResource("/").toString();//("/")+baseUploadPath;
 					String fileSubPath = certUploadPath+certtype+"/" +imagetype+ "_"+System.currentTimeMillis() + new Random(50000).nextInt()
 							+ "." + last;
 					//String fileRootPath = request.getSession().getServletContext().getRealPath("../../");
