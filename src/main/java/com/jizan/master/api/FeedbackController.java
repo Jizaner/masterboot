@@ -172,17 +172,13 @@ public class FeedbackController extends BaseController {
 				String name = file.getOriginalFilename();
 				String last = name.substring(name.lastIndexOf(".") + 1);
 				// 上传路径--文件保存路径
-				String fileRootPath = request.getSession().getServletContext().getRealPath("../../uploadfiles");//+baseUploadPath;
-//				System.out.println(fileRootPath1);
-				String fileRootPath1 = request.getSession().getServletContext().getResource("/").getPath()+"../../upload";
-				
-				System.out.println(System.getProperty("user.dir"));
-				//String fileRootPath = request.getSession().getServletContext().getRealPath("/")+baseUploadPath;//
+				String fileRootPath = request.getSession().getServletContext().getRealPath("/")+"upload\\feedback1";//+baseUploadPath;
+				String fileRootPath2 = request.getSession().getServletContext().getResource("/").getPath()+"upload/feedback1";
+				//String fileRootPth = request.getSession().getServletContext().getRealPath("/")+baseUploadPath;//
 				String fileSubPath = System.currentTimeMillis() + new Random(50000).nextInt() + "." + last;
 				File newfile = new File(fileRootPath, fileSubPath);
 				if(!newfile.exists()&&!newfile.isDirectory()){
 					newfile.mkdir();
-					System.out.println(".......make...."+fileRootPath);
 				}
 				file.transferTo(newfile);
 				imageList.add(fileSubPath);
@@ -190,7 +186,7 @@ public class FeedbackController extends BaseController {
 				feedback.setImages(imageStr);
 			}
 			feedback.setCreatedon(System.currentTimeMillis() / 1000);
-			//feedback.setCreatedby(getCurrentUserId());
+			feedback.setCreatedby(getCurrentUserId());
 			this.feedbackService.add(feedback);
 			return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN);
 		} catch (Exception e) {

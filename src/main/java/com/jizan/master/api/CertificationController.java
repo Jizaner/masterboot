@@ -34,8 +34,6 @@ public class CertificationController extends BaseController {
 
 	@Resource
 	private CertificationService certificationService;
-	@Value("${spring.upload-path.certification}")
-	private String certUploadPath;
 
 	/* Show ******************/
 	@ApiOperation(value = "根据ID获取certification#v1.0",notes = "根据ID获取certification#v1.0")
@@ -132,39 +130,26 @@ public class CertificationController extends BaseController {
 		return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN);
 	}
 
-	@ApiOperation(value = "上传多张图片到自有服务器#v1.0", notes = "上传多张图片#v1.0;其中：<br>cert_type=company（企业）或person（个人）;<br>image_type=front(正面）或reverse（背面）或handing（手持）")
+	@ApiOperation(value = "上传多张图片到七牛云服务器#v1.0", notes = "上传多张图片#v1.0;其中：<br>cert_type=company（企业）或person（个人）;<br>image_type=front(正面）或reverse（背面）或handing（手持）")
 	@RequestMapping(value = "/upload/{cert_type}/{image_type}", method = RequestMethod.POST)
 	public JsonResult _batchUploadFile(@PathVariable("cert_type") String certtype,@PathVariable("image_type") String imagetype,@RequestParam(value = "file", required = false) CommonsMultipartFile[] file, HttpServletRequest request) {
 			// 判断文件是否为空
 			if (file != null && file.length > 0) {
 				try {
 				ArrayList<String> imageList = new ArrayList<String>();
-
+				String httpName = QiniuBase.PrivateHttpName;
+				String bucketName =QiniuBase.PrivateBucketName;
 				for (int i = 0; i < file.length; i++) {
 					String name = file[i].getOriginalFilename();
 					String last = name.substring(name.lastIndexOf(".") + 1);
 					// 上传路径--文件保存路径
-					String fileRootPath = request.getSession().getServletContext().getResource("/").toString();//("/")+baseUploadPath;
-					String fileSubPath = certUploadPath+certtype+"/" +imagetype+ "_"+System.currentTimeMillis() + new Random(50000).nextInt()
+					String key = getCurrentUserId()+"_"+certtype+"_" +imagetype+ "_"+System.currentTimeMillis() + new Random(50000).nextInt()
 							+ "." + last;
-					//String fileRootPath = request.getSession().getServletContext().getRealPath("../../");
-					//String fileSubPath = "/upload/certification/"+certtype+"/" +imagetype+ "_"+System.currentTimeMillis() + new Random(50000).nextInt()
-					//		+ "." + last;
-					File newfile = new File(fileRootPath, fileSubPath);
-					file[i].transferTo(newfile);
-					imageList.add(fileSubPath);
+					byte[] fileByte = file[i].getBytes();
+			        new QiniuUpload().upload(fileByte, key, bucketName);
+					imageList.add(httpName+"/"+key);
 				}
-				
 				String imageStr = StringUtil.join(imageList, ",");
-				
-//				Certification certification= new Certification();
-//				certification.setImages(imageStr);
-//				certification.setType(certtype);
-//				certification.setCreatedby(getCurrentUserId());
-//				certification.setCreatedon(System.currentTimeMillis() / 1000);
-//				this.certificationService.add(certification);
-//				Certification certification1 = this.certificationService.findById(certification.getId());
-//				return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN, certification1);
 				return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN, imageStr);
 				} catch (Exception e) {
 					return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);
@@ -174,3 +159,6 @@ public class CertificationController extends BaseController {
 		
 	}
 }
+
+
+
