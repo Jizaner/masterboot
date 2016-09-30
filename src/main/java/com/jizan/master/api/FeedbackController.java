@@ -172,14 +172,18 @@ public class FeedbackController extends BaseController {
 				String name = file.getOriginalFilename();
 				String last = name.substring(name.lastIndexOf(".") + 1);
 				// 上传路径--文件保存路径
-//				String fileRootPath1 = request.getSession().getServletContext().getRealPath("/")+baseUploadPath;
+				String fileRootPath = request.getSession().getServletContext().getRealPath("../../uploadfiles");//+baseUploadPath;
 //				System.out.println(fileRootPath1);
-				String fileRootPath = request.getSession().getServletContext().getResource("/").getPath()+baseUploadPath;
+				String fileRootPath1 = request.getSession().getServletContext().getResource("/").getPath()+"../../upload";
 				
-				System.out.println(fileRootPath);
+				System.out.println(System.getProperty("user.dir"));
 				//String fileRootPath = request.getSession().getServletContext().getRealPath("/")+baseUploadPath;//
-				String fileSubPath = "upload/feedback/" +  System.currentTimeMillis() + new Random(50000).nextInt() + "." + last;
+				String fileSubPath = System.currentTimeMillis() + new Random(50000).nextInt() + "." + last;
 				File newfile = new File(fileRootPath, fileSubPath);
+				if(!newfile.exists()&&!newfile.isDirectory()){
+					newfile.mkdir();
+					System.out.println(".......make...."+fileRootPath);
+				}
 				file.transferTo(newfile);
 				imageList.add(fileSubPath);
 				String imageStr = StringUtil.join(imageList, ",");
