@@ -51,15 +51,18 @@ public class TopicServiceImpl extends BaseServiceImpl<Topic> implements TopicSer
 		pagerMap.put("startIdx", Integer.valueOf(pager.getStartIdx()));
 		pagerMap.put("limit", Integer.valueOf(pager.getLimit()));
 		List items = getBaseDao().pageBy(pagerMap);
-		for (int i = 0; i < items.size(); i++) {
-			String imagesStr=((Topic) items.get(i)).getImages();
-			String[] imagesArray=imagesStr.split(",");
-			for (int j = 0; j < imagesArray.length; j++) {
-				imagesArray[j]=imagesArray[j]+"!thumbnail";
+			for (int i = 0; i < items.size(); i++) {
+				String imagesStr=((Topic) items.get(i)).getImages();
+				if (imagesStr!=null) {
+					String[] imagesArray=imagesStr.split(",");
+					for (int j = 0; j < imagesArray.length; j++) {
+						imagesArray[j]=imagesArray[j]+"!thumbnail";
+					}
+					String newImagesStr= StringUtil.join(imagesArray, ",");
+					((Topic) items.get(i)).setImages(newImagesStr);
+				}
 			}
-			String newImagesStr= StringUtil.join(imagesArray, ",");
-			((Topic) items.get(i)).setImages(newImagesStr);
-		}
+		
 		pager.setRows(items);
 		return pager;
 	}
