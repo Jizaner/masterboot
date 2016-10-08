@@ -12,7 +12,7 @@ public class QiniuBase {
     public static final String HttpName = "http://od8rh27zr.bkt.clouddn.com";
     public static final String BucketName = "ommasters";
     
-    public static final String PrivateHttpName = "ttp://oeaspf0zi.bkt.clouddn.com";
+    public static final String PrivateHttpName = "http://oeaspf0zi.bkt.clouddn.com";
     public static final String PrivateBucketName = "certifications";
 }
 

@@ -29,6 +29,7 @@ public class User {
 	private String registerlati;
 	private String registerlong;
 	private String appversion;
+	private Integer status;//0:审核中；1：已通过实名；2：未通过实名
 	private Long verifiedon;
 	private Integer verifiedby;
 
@@ -222,6 +223,14 @@ public class User {
 
 	public void setVerifiedby(Integer verifiedby) {
 		this.verifiedby = verifiedby;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 

@@ -130,6 +130,13 @@ public class CertificationController extends BaseController {
 		return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN);
 	}
 
+	@Deprecated
+	@ApiOperation(value = "个人实名认证，上传多张图片到七牛云服务器#v1.0", notes = "上传多张图片#v1.0;其中：<br>cert_type=company（企业）或person（个人）;<br>image_type=front(正面）或reverse（背面）或handing（手持）")
+	@RequestMapping(value = "/upload/person/{image_type}", method = RequestMethod.POST)
+	public JsonResult _batchUploadFilePersonal(@PathVariable("image_type") String imagetype,@RequestParam(value = "file", required = false) CommonsMultipartFile[] file, HttpServletRequest request) {
+		return this._batchUploadFile("person", imagetype, file, request);
+	}
+	
 	@ApiOperation(value = "上传多张图片到七牛云服务器#v1.0", notes = "上传多张图片#v1.0;其中：<br>cert_type=company（企业）或person（个人）;<br>image_type=front(正面）或reverse（背面）或handing（手持）")
 	@RequestMapping(value = "/upload/{cert_type}/{image_type}", method = RequestMethod.POST)
 	public JsonResult _batchUploadFile(@PathVariable("cert_type") String certtype,@PathVariable("image_type") String imagetype,@RequestParam(value = "file", required = false) CommonsMultipartFile[] file, HttpServletRequest request) {
@@ -155,8 +162,7 @@ public class CertificationController extends BaseController {
 					return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);
 				}
 			}
-			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION);
-		
+			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION);	
 	}
 }
 
