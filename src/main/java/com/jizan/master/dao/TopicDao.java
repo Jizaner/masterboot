@@ -20,6 +20,19 @@ public interface TopicDao extends BaseDao<Topic> {
 	 */
 	public int countRepliedBy(Map<?, ?> conditions);
 	
+	
+	/**根据条件模糊查询问题列表
+	 * @param paramMap key:repliedby
+	 * @return
+	 */
+	public abstract List<Topic> pageFuzzyBy(Map<?, ?> paramMap);
+
+	/**根据条件模糊查询统计问题数
+	 * @param conditions
+	 * @return
+	 */
+	public int countFuzzyBy(Map<?, ?> conditions);
+	
 	/**根据ID数组分页查找数据集合
 	 * @param paramList
 	 * @return

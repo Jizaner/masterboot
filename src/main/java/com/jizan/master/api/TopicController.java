@@ -178,6 +178,32 @@ public class TopicController extends BaseController {
 		Pager pager = this.topicService.pageRepliedBy(pageNum, limit, conditions);
 		return pager;
 	}
+	
+	
+	/* Page ******************/
+	@ApiOperation(value = "根据条件模糊查询到的主题topic分页#v1.0", notes = "根据页码获取topic分页#v1.0")
+	@RequestMapping(value = "/fuzzy/page/{num:\\d+}", method = RequestMethod.POST)
+	//@ResponseBody
+	public Pager _fuzzyPage(@RequestParam(value = "condition", required = false) String condition,@PathVariable("num") int pageNum) {
+		int limit = 20;
+		Map<Object, Object> conditions = new HashMap<Object, Object>();
+		conditions.put("condition", "%"+condition+"%");
+		Pager pager = this.topicService.pageFuzzyBy(pageNum, limit, conditions);
+		return pager;
+	}
+	
+	/* Page ******************/
+	@ApiOperation(value = "获取某用户回答的主题topic分页#v1.0", notes = "根据页码获取topic分页#v1.0")
+	@RequestMapping(value = "/userreply/{userid:\\d+}/page/{num:\\d+}", method = RequestMethod.GET)
+	@ResponseBody
+	public Pager _userReplyPage(@PathVariable("userid") int userid,@PathVariable("num") int pageNum) {
+		int limit = 20;
+		Map<Object, Object> conditions = new HashMap<Object, Object>();
+		conditions.put("repliedby", userid);
+		Pager pager = this.topicService.pageRepliedBy(pageNum, limit, conditions);
+		return pager;
+	}
+	
 
 	@ApiOperation(value = "新增主题，并上传多张图片到自有服务器#v1.0", notes = "新增主题，并上传多张图片#v1.0")
 	@RequestMapping(value = "/new/imagestolocalserver", method = RequestMethod.POST)

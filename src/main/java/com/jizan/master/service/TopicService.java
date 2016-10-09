@@ -20,4 +20,17 @@ public interface TopicService extends BaseService<Topic> {
 	 * @return
 	 */
 	public abstract List<Topic> pageByIds(Map map);
+	
+	
+	/**根据条件模糊查询问题列表
+	 * @param paramMap key:repliedby
+	 * @return
+	 */
+	public abstract Pager pageFuzzyBy(int page, int limit,Map<Object, Object> conditions);
+
+	/**根据条件模糊查询统计问题数
+	 * @param conditions
+	 * @return
+	 */
+	public abstract int countFuzzyBy(Map<?, ?> conditions);
 }

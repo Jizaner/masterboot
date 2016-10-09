@@ -202,7 +202,7 @@
 		<if test="createdby != null">and createdby= #{createdby}</if>
 		</where>
 	</select>
-	
+	<!-- 统计某个用户创建的回答数 -->
 	<select id="countRepliedBy" parameterType="map" resultType="integer">
 		select count(DISTINCT(t.topicid)) from tb_replies t, tb_topics m
 		<where>
@@ -211,4 +211,23 @@
 		</where>
 	</select>
 	<!-- ******************Other Mappers****************** -->
+	
+	<!-- 根据模糊条件分页查询 -->
+	 <select id="pageFuzzyBy" parameterType="map" resultMap="TopicRM">
+		select t.*,m.nickname as author_nickname,m.avatar as author_avatar from tb_topics t,tb_users m
+		<where>
+		t.createdby = m.id
+		<if test="condition != null">and (t.title like #{condition} or t.content like #{condition} or t.tags like #{condition})</if>
+		</where>
+		order by t.createdon desc
+		limit #{startIdx},#{limit}
+	</select> 
+	<!-- 统计模糊查询结果数 -->
+	<select id="countFuzzyBy" parameterType="map" resultType="integer">
+		select count(id) from tb_topics
+		<where>
+		<if test="condition != null">and (title like #{condition} or content like #{condition} or tags like #{condition})</if>
+		</where>
+	</select>
+	
 </mapper>

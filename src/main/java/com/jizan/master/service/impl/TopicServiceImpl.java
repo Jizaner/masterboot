@@ -41,6 +41,27 @@ public class TopicServiceImpl extends BaseServiceImpl<Topic> implements TopicSer
 		return topicDao.countRepliedBy(conditions);
 	}
 
+	/**根据条件模糊查询问题列表
+	 * @param paramMap key:repliedby
+	 * @return
+	 */
+	public Pager pageFuzzyBy(int page, int limit,Map<Object, Object> conditions){
+		Pager pager = new Pager(Integer.valueOf(page), countFuzzyBy(conditions), limit);
+		conditions.put("startIdx", Integer.valueOf(pager.getStartIdx()));
+		conditions.put("limit", Integer.valueOf(pager.getLimit()));
+		List items = topicDao.pageFuzzyBy(conditions);
+		pager.setRows(items);
+		return pager;
+	}
+
+	/**根据条件模糊查询统计问题数
+	 * @param conditions
+	 * @return
+	 */
+	public int countFuzzyBy(Map<?, ?> conditions){
+		return topicDao.countFuzzyBy(conditions);		
+	}
+	
 	public List<Topic> pageByIds(Map map) {
 		return topicDao.pageByIds(map);
 	}
