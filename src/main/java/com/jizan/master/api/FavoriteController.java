@@ -207,9 +207,9 @@ public class FavoriteController extends BaseController {
 		queryItem.setItemid(itemid);
 		queryItem.setCreatedby(getCurrentUserId());
 		if (null != this.favoriteService.findBy(queryItem)) {
-			return new JsonResult(SystemConfig.SUCCESS, SystemConfig.EXIST, "已收藏！");
+			return new JsonResult(SystemConfig.SUCCESS, SystemConfig.EXIST, "Has collected!");
 		}else{
-			return new JsonResult(SystemConfig.SUCCESS, SystemConfig.NOT_FOUND, "未收藏！");
+			return new JsonResult(SystemConfig.SUCCESS, SystemConfig.NOT_FOUND, "Has not collected!");
 		}
 	}
 }
