@@ -23,6 +23,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+
+import com.jizan.interceptor.UserSecurityInterceptor;
 
 import javax.sql.DataSource;
 
@@ -92,6 +95,15 @@ import javax.sql.DataSource;
 		container.setPort(8088);
 	}
 
+	/**
+     * 配置拦截器
+     * @author lance
+     * @param registry
+     */
+    public void addInterceptors(InterceptorRegistry registry) {
+    	registry.addInterceptor(new UserSecurityInterceptor()).addPathPatterns("/console/**");
+	}
+    
 	public static void main(String[] args) {
 		SpringApplication.run(MasterApplication.class, args);
 		logger.info("=== SpringBoot Start Success ===");
