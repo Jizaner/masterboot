@@ -13,24 +13,39 @@ import io.swagger.annotations.Api;
 @Controller
 public class HomeWebController {
 
-	@RequestMapping("/demo")
-	public String _doView() {
-		return "/angulr/index";
-	}
-
-	@RequestMapping(value = "/greeting", method = RequestMethod.GET)
-	public String greeting(@RequestParam(name = "name", required = false, defaultValue = "world") String name,
+	//--foreend
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String defaultPage(@RequestParam(name = "name", required = false, defaultValue = "world") String name,
 			Model model) {
 		model.addAttribute("xname", name);
 		return "index";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(@RequestParam(name = "name", required = false, defaultValue = "world") String name,Model model) {
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public String indexPage(@RequestParam(name = "name", required = false, defaultValue = "world") String name,
+			Model model) {
 		model.addAttribute("xname", name);
-		return "login";
+		return "index";
 	}
 	
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public String registerPage(@RequestParam(name = "name", required = false, defaultValue = "world") String name,Model model) {
+		model.addAttribute("xname", name);
+		return "register";
+	}
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String doLogin(@RequestParam(name = "account", required = true) String account,@RequestParam(name = "password", required = true) String password,Model model) {
+		model.addAttribute("xname", account);
+		System.out.println(account+"---"+password);
+		return "register";
+	}
+	//--backend
+	@RequestMapping("/console")
+	public String _doView() {
+		return "/angulr/index";
+	}
+	
+	//--ajax 
 	@ResponseBody
 	@RequestMapping(value = "/ajax", method = RequestMethod.GET)
 	public String ajax(@RequestParam("username") String username) {
