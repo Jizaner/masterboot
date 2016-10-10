@@ -24,8 +24,8 @@ angular.module('app')
       prefix: 'l10n/',
       suffix: '.js'
     });
-    // Tell the module what language to use by default
-    $translateProvider.preferredLanguage('en');
+    // Tell the module what language to use by default设置默认语言
+    $translateProvider.preferredLanguage('zh_CN');
     // Tell the module to store the language in the local storage
     $translateProvider.useLocalStorage();
   }]);

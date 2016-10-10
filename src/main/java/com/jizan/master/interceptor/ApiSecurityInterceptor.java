@@ -1,4 +1,4 @@
-package com.jizan.master.web.interceptor;
+package com.jizan.master.interceptor;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -11,9 +11,9 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-public class LegalInterceptor extends HandlerInterceptorAdapter {
+public class ApiSecurityInterceptor extends HandlerInterceptorAdapter {
 
-	private static final Logger log = Logger.getLogger(LegalInterceptor.class);
+	private static final Logger log = Logger.getLogger(ApiSecurityInterceptor.class);
 	
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {

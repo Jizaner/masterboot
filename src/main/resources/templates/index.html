@@ -5,8 +5,8 @@
     <title>登录</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />    
-    <link th:href="@{/bootstrap/3.3.4/css_default/bootstrap-theme.min.css}" rel="stylesheet" />
-    <link th:href="@{/bootstrap/3.3.4/css_default/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/foreend/bootstrap/3.3.4/css_default/bootstrap-theme.min.css}" rel="stylesheet" />
+    <link th:href="@{/foreend/bootstrap/3.3.4/css_default/bootstrap.min.css}" rel="stylesheet" />
     
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -127,7 +127,7 @@
 						<div class="modal-body">
 							<div class="row clearfix">
 		<div class="col-md-12 column">
-			<form role="form" action="login"  method="post">
+			<form role="form" action="api/login"  method="post">
 				<div class="form-group">
 					 <label for="exampleInputEmail1">帐号</label><input type="text" name="account" class="form-control" id="exampleInputEmail1" placeholder="hi@mpub.cn"/>
 				</div>
@@ -149,7 +149,7 @@
 <!-- Le javascript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script th:src="@{/jquery/jquery-1.9.1.js}"></script>
-<script th:src="@{/bootstrap/3.3.4/js/bootstrap.min.js}"></script>
+<script th:src="@{/foreend/jquery/jquery-1.9.1.js}"></script>
+<script th:src="@{/foreend/bootstrap/3.3.4/js/bootstrap.min.js}"></script>
 </body>
 </html>

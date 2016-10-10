@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
@@ -766,7 +768,6 @@ public class StringUtil {
 		for (int j = 0; j < i; j++)
 			if (!Character.isDigit(s.charAt(j)))
 				return false;
-
 		return true;
 	}
 
@@ -1049,6 +1050,19 @@ public class StringUtil {
 		}
 		return ret;
 	}
+	
+	/** 
+     * 检测邮箱地址是否合法 
+     * @param email 
+     * @return true合法 false不合法 
+     */  
+    public boolean isEmail(String email){  
+          if (null==email || "".equals(email)) return false;    
+          //Pattern p = Pattern.compile("\\w+@(\\w+.)+[a-z]{2,3}"); //简单匹配  
+          Pattern p =  Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");//复杂匹配  
+          Matcher m = p.matcher(email);  
+          return m.matches();  
+         } 
 
 	/*public static void main(String[] args) {
 		System.out.println(getRandomJianHan(30));

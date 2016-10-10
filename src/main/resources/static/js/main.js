@@ -12,7 +12,7 @@ angular.module('app')
 
       // config
       $scope.app = {
-        name: 'Angulr',
+        name: '管理后台',
         version: '1.3.3',
         // for chart colors
         color: {
@@ -55,8 +55,8 @@ angular.module('app')
 
       // angular translate
       $scope.lang = { isopen: false };
-      $scope.langs = {en:'English', de_DE:'German', it_IT:'Italian'};
-      $scope.selectLang = $scope.langs[$translate.proposedLanguage()] || "English";
+      $scope.langs = {en:'English',zh_CN:'中文'};
+      $scope.selectLang = $scope.langs[$translate.proposedLanguage()] || "中文";
       $scope.setLang = function(langKey, $event) {
         // set the current lang
         $scope.selectLang = $scope.langs[langKey];

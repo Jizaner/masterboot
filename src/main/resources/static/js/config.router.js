@@ -314,6 +314,7 @@ angular.module('app')
               .state('access.signin', {
                   url: '/signin',
                   templateUrl: 'tpl/page_signin.html',
+                  //templateUrl: 'register',
                   resolve: {
                       deps: ['uiLoad',
                         function( uiLoad ){

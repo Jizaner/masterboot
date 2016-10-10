@@ -8,15 +8,16 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function($s
     $scope.login = function() {
       $scope.authError = null;
       // Try to login
-      $http.post('api/login', {email: $scope.user.email, password: $scope.user.password})
+      //$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+      $http.post('api/console/login', {account: $scope.user.account, password: $scope.user.password})
       .then(function(response) {
-        if ( !response.data.user ) {
-          $scope.authError = 'Email or Password not right';
+        if ( !response.data.code || response.data.code!=200) {
+          $scope.authError = '帐号或密码输入错误！ ';
         }else{
           $state.go('app.dashboard-v1');
         }
       }, function(x) {
-        $scope.authError = 'Server Error';
+        $scope.authError = '服务器数据请求错误！';
       });
     };
   }])
