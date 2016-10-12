@@ -2,6 +2,7 @@
 
 "header" : {
   "navbar" : {
+	"HOME" : "Home",
     "UPLOAD" : "Upload",
     "new" : {
       "NEW" : "New",

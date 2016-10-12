@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(value = "意见反馈接口")
 @RestController
-@RequestMapping("/feedback")
+@RequestMapping("/app/feedback")
 public class FeedbackController extends BaseController {
 
 	@Resource

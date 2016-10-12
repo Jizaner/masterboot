@@ -16,7 +16,7 @@ import com.jizan.master.service.AdvertisementService;
 
 @Api(value = "advertisement",description = "/*添加注释*/")
 @RestController
-@RequestMapping("/advertisement")
+@RequestMapping("/app/advertisement")
 public class AdvertisementController {
 
 	@Resource

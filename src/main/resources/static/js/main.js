@@ -14,6 +14,7 @@ angular.module('app')
       $scope.app = {
         name: '管理后台',
         version: '1.3.3',
+        currentuser:{},
         // for chart colors
         color: {
           primary: '#7266ba',
@@ -38,6 +39,13 @@ angular.module('app')
         }
       }
 
+      //by chao
+      if ( angular.isDefined($localStorage.currentuser) ) {
+          $scope.app.currentuser = $localStorage.currentuser;
+        } else {
+          $localStorage.currentuser = $scope.app.currentuser;
+        }
+      
       // save settings to local storage
       if ( angular.isDefined($localStorage.settings) ) {
         $scope.app.settings = $localStorage.settings;

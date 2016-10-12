@@ -16,8 +16,7 @@ angular.module('app')
     [          '$stateProvider', '$urlRouterProvider',
       function ($stateProvider,   $urlRouterProvider) {
           
-          $urlRouterProvider
-              .otherwise('app/dashboard-v1');
+          $urlRouterProvider.otherwise('app/dashboard-v1');
           $stateProvider
               .state('app', {
                   abstract: true,
@@ -185,6 +184,32 @@ angular.module('app')
                       deps: ['uiLoad',
                         function( uiLoad){
                           return uiLoad.load('js/controllers/form.js');
+                      }]
+                  }
+              })
+              .state('app.form.addnews', {
+                  url: '/addnews',
+                  cache:'true', 
+                  templateUrl: 'tpl/om_form_news.html',
+                  resolve: {
+                	  deps: ['$ocLazyLoad','uiLoad',
+                	         function( $ocLazyLoad,uiLoad){
+                		  		return uiLoad.load('js/controllers/submit-news.js').then(
+                		  				function(){
+                		  					return $ocLazyLoad.load('toaster');
+                		  				}
+                		  		);
+                	  	}]
+                  	}
+              })
+              .state('app.form.news', {
+                  url: '/listnews',
+                  cache:'false', 
+                  templateUrl: 'tpl/om_table_news.html',
+                  resolve: {
+                      deps: ['uiLoad',
+                        function( uiLoad ){
+                          return uiLoad.load( ['js/controllers/list-news.js'] );
                       }]
                   }
               })

@@ -22,7 +22,7 @@ import com.jizan.master.service.TopicService;
 
 @Api(value = "favorite",description = "添加注释")
 @RestController
-@RequestMapping("/favorite")
+@RequestMapping("/app/favorite")
 public class FavoriteController extends BaseController {
 
 	@Resource

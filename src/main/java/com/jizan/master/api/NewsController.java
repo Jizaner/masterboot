@@ -15,7 +15,7 @@ import com.jizan.master.service.NewsService;
 
 @Api(value = "资讯接口")
 @RestController
-@RequestMapping("/news")
+@RequestMapping("/app/news")
 public class NewsController extends BaseController{
 
 	@Resource
@@ -68,6 +68,8 @@ public class NewsController extends BaseController{
 	@ResponseBody
 	public JsonResult _new(@RequestBody News news) {
 		try {
+			news.setCreatedon(System.currentTimeMillis()/1000);
+			//news.setCreatedby(getCurrentUserId());
 			this.newsService.add(news);
 		} catch (Exception e) {
 			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);

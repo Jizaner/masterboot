@@ -89,8 +89,8 @@ public class HomeWebController {
 			User resultUser = this.userService.findBy(user);
 			if (null != resultUser) {
 				HttpSession session = request.getSession();
-				session.setAttribute("cur_user", user);
-				return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN, user);
+				session.setAttribute("cur_user", resultUser);
+				return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN,resultUser);
 			}
 		} catch (Exception e) {
 			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.ERROR,e);

@@ -2,8 +2,8 @@
 
 /* Controllers */
   // signin controller
-app.controller('SigninFormController', ['$scope', '$http', '$state', function($scope, $http, $state) {
-    $scope.user = {};
+app.controller('SigninFormController', ['$scope', '$http','$localStorage','$state', function($scope, $http,$localStorage, $state) {
+    $scope.currentuser = {};
     $scope.authError = null;
     $scope.login = function() {
       $scope.authError = null;
@@ -14,6 +14,9 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function($s
         if ( !response.data.code || response.data.code!=200) {
           $scope.authError = '帐号或密码输入错误！ ';
         }else{
+          $scope.app.currentuser = response.data.data;
+          $localStorage.currentuser = $scope.app.currentuser;
+          console.log($localStorage.currentuser);
           $state.go('app.dashboard-v1');
         }
       }, function(x) {

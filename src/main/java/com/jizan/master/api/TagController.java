@@ -19,7 +19,7 @@ import com.jizan.master.service.TagService;
 
 @Api(value = "tag",description = "/*添加注释*/")
 @RestController
-@RequestMapping("/tag")
+@RequestMapping("/app/tag")
 public class TagController extends BaseController {
 
 	@Resource

@@ -29,7 +29,7 @@ import com.jizan.master.service.CertificationService;
 
 @Api(value = "certification",description = "/*添加注释*/")
 @RestController
-@RequestMapping("/certification")
+@RequestMapping("/app/certification")
 public class CertificationController extends BaseController {
 
 	@Resource

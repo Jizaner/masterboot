@@ -16,7 +16,7 @@ import com.jizan.master.service.VersionService;
 
 @Api(value = "version",description = "/*添加注释*/")
 @RestController
-@RequestMapping("/version")
+@RequestMapping("/app/version")
 public class VersionController {
 
 	@Resource

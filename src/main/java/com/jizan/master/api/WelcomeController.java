@@ -13,7 +13,7 @@ import io.swagger.annotations.Api;
 
 @Api(value = "WEB端接口")
 @RestController
-@RequestMapping("/web")
+@RequestMapping("/app/web")
 public class WelcomeController extends BaseController{
 
 	@Value("${application.message:Hello World}")

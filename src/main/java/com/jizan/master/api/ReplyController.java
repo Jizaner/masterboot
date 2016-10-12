@@ -19,7 +19,7 @@ import com.jizan.master.service.TopicService;
 
 @Api(value = "回答接口")
 @RestController
-@RequestMapping("/reply")
+@RequestMapping("/app/reply")
 public class ReplyController extends BaseController{
 
 	@Resource

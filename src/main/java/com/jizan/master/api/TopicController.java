@@ -38,7 +38,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(value = "问题接口")
 @RestController
-@RequestMapping("/topic")
+@RequestMapping("/app/topic")
 public class TopicController extends BaseController {
 
 	@Resource

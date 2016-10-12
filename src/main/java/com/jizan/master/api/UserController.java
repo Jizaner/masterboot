@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(value = "用户接口", description = "")
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/app/user")
 public class UserController extends BaseController {
 
 	@Resource
