@@ -1,6 +1,9 @@
 package com.jizan.master.api;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.*;
 
 import com.jizan.utils.Pager;
+import com.jizan.utils.DTPager;
 import com.jizan.utils.JsonResult;
 import com.jizan.utils.SystemConfig;
 import com.jizan.master.entity.News;
@@ -62,6 +66,16 @@ public class NewsController extends BaseController{
 		return pager;
 	}
 
+	/* Pager ****************/
+	@ApiOperation(value = "给datatables提供的接口，获取news分页#v1.0",notes = "获取news分页#v1.0")
+	@RequestMapping(value = "/dtpager",method=RequestMethod.POST)
+	@ResponseBody
+	public DTPager _dtpageTable(@RequestParam(value = "draw", required = true) Integer draw,@RequestParam(value = "start", required = true) Integer start, @RequestParam(value = "length", required = true) Integer length) {
+		Map<Object, Object> conditions = new HashMap<>();
+		DTPager dtpager = this.newsService.dtpageWith(draw, start,length , conditions);
+		return dtpager;
+	}
+	
 	/* Add ******************/
 	@ApiOperation(value = "新增news#v1.0",notes = "新增news#v1.0")
 	@RequestMapping(value = "/new",method=RequestMethod.POST)

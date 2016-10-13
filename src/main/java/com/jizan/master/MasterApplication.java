@@ -44,7 +44,7 @@ import javax.sql.DataSource;
 	@RequestMapping(value = {"/",""})
 	public String helloboot(){
 		
-		return "hello boot !!" ;
+		return "Hello Spring-boot!" ;
 	}
 	
 	@Override

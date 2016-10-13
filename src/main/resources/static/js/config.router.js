@@ -196,7 +196,7 @@ angular.module('app')
                 	         function( $ocLazyLoad,uiLoad){
                 		  		return uiLoad.load('js/controllers/submit-news.js').then(
                 		  				function(){
-                		  					return $ocLazyLoad.load('toaster');
+                		  					return $ocLazyLoad.load(['toaster','textAngular']);
                 		  				}
                 		  		);
                 	  	}]
@@ -209,7 +209,7 @@ angular.module('app')
                   resolve: {
                       deps: ['uiLoad',
                         function( uiLoad ){
-                          return uiLoad.load( ['js/controllers/list-news.js'] );
+                          return uiLoad.load( ['js/controllers/list-news.js','vendor/libs/moment.min.js'] );
                       }]
                   }
               })

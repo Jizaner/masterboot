@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jizan</groupId>
 	<artifactId>masters</artifactId>
-	<version>1.1.4-RELEASE</version>
+	<version>1.1.5-RELEASE</version>
 	<packaging>war</packaging>
 	<name>masters</name>
 	<description>门派网The app supports the apis of the master app.</description>
