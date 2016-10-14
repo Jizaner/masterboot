@@ -1,163 +1,243 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>用户登录</title>
-    <title>登录</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />    
-    <link th:href="@{/foreend/bootstrap/3.3.4/css_default/bootstrap-theme.min.css}" rel="stylesheet" />
-    <link th:href="@{/foreend/bootstrap/3.3.4/css_default/bootstrap.min.css}" rel="stylesheet" />
-    <style>
-    .navbar,.navbar-inverse,.navbar .btn{
-    border-radius:0px;
-    background-color:#374b70
-    }
-    </style>
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+	<meta charset="utf-8"/>
+	<title>初云官网</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" /> 
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+	<meta name="keywords" content=""/>
+	<meta name="description" content=""/>
+
+	<!-- stylesheets css -->
+	<link th:href="@{/frontend/css/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{/frontend/css/animate.min.css}" rel="stylesheet" />
+
+	<link th:href="@{/frontend/css/et-line-font.css}" rel="stylesheet" />
+	<link th:href="@{/frontend/css/font-awesome.min.css}" rel="stylesheet" />
+
+	<link th:href="@{/frontend/css/vegas.min.css}" rel="stylesheet" />
+	<link th:href="@{/frontend/css/style.css}" rel="stylesheet" />
+
+</head>
 <body>
-<div class="container">
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<nav class="navbar navbar-default navbar-inverse " role="navigation">
-				<div class="navbar-header">
-					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">运维专家</a>
+
+<!-- preloader section -->
+<section class="preloader">
+	<div class="sk-circle">
+       <div class="sk-circle1 sk-child"></div>
+       <div class="sk-circle2 sk-child"></div>
+       <div class="sk-circle3 sk-child"></div>
+       <div class="sk-circle4 sk-child"></div>
+       <div class="sk-circle5 sk-child"></div>
+       <div class="sk-circle6 sk-child"></div>
+      <div class="sk-circle7 sk-child"></div>
+       <div class="sk-circle8 sk-child"></div>
+       <div class="sk-circle9 sk-child"></div>
+       <div class="sk-circle10 sk-child"></div>
+       <div class="sk-circle11 sk-child"></div>
+       <div class="sk-circle12 sk-child"></div>
+     </div>
+</section>
+
+<!-- home section -->
+<section id="home">
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-offset-2 col-md-8 col-sm-12">
+				<div class="home-thumb">
+					<h1 class="wow fadeInUp" data-wow-delay="0.4s">极赞产品，触手可及</h1>
+          			<h3 class="wow fadeInUp" data-wow-delay="0.6s">We are almost <strong>ready to launch</strong> our <strong>new creative</strong> website!</h3>
+          			<a href="#about" class="btn btn-lg btn-default smoothScroll wow fadeInUp hidden-xs" data-wow-delay="0.8s">Let's begin</a>
+          			<!-- <a href="console#/access/signup">注册</a> -->
+        			<a href="#" data-toggle="modal" data-target="#modal1" class="btn btn-lg btn-success smoothScroll wow fadeInUp" data-wow-delay="1.0s">马上登录！</a>
 				</div>
-				
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav navbar-right">
-						<li class="active">
- 							 <a id="modal-233178" href="#modal-container-233178" role="button" class="btn" data-toggle="modal">登录</a>
-						
-<!-- 							 <a href="console#/access/signin" role="button" class="btn">登录</a>
- --> 
- </li>
-						<li>
-							 <a href="console#/access/signup">注册</a>
-						</li>
-					</ul>
-					<form class="navbar-form navbar-right" role="search">
-						<div class="form-group">
-							<input type="text" class="form-control" />
-						</div> <button type="submit" class="btn btn-default">搜索</button>
+			</div>
+
+		</div>
+	</div>		
+</section>
+
+<!-- about section -->
+<section id="about">
+	<div class="container">
+		<div class="row">
+
+      <div class="col-md-6 col-sm-12">
+        <img src="frontend/images/about-img.png" class="img-responsive wow fadeInUp" alt="About"/>
+      </div>
+
+			<div class="col-md-6 col-sm-12">
+				<div class="about-thumb">
+					<div class="section-title">
+						<h1 class="wow fadeIn" data-wow-delay="0.2s">关于我们</h1>
+						<h3 class="wow fadeInUp" data-wow-delay="0.4s">Comila Studio is based in Hong Kong</h3>
+					</div>
+					<div class="wow fadeInUp" data-wow-delay="0.6s">
+						<p>Vivamus elit risus, porttitor id placerat ut, aliquet non quam. Pellentesque nulla metus, ornare et porttitor vel, consectetur vitae erat. Vestibulum tristique semper tellus vitae condimentum. Duis sed eros eget diam dictum posuere.</p>
+						<p>Aliquam vel gravida ligula. Phasellus ut purus ac libero ultrices commodo commodo at quam. In vestibulum purus sit amet tempus euismod. Donec sed congue nisl.</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+<!-- feature section -->
+<section id="feature">
+  <div class="container">
+    <div class="row">
+      
+      <svg preserveAspectRatio="none" viewBox="0 0 100 102" height="100" width="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" class="svgcolor-light">
+        <path d="M0 0 L50 100 L100 0 Z"></path>
+      </svg>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="media wow fadeInUp" data-wow-delay="0.4s">
+          <div class="media-object media-left">
+            <i class="icon icon-laptop"></i>
+          </div>
+          <div class="media-body">
+            <h2 class="media-heading">响应式</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus lacus nulla, eget varius justo tristique ut.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="media wow fadeInUp" data-wow-delay="0.8s">
+          <div class="media-object media-left">
+            <i class="icon icon-refresh"></i>
+          </div>
+          <div class="media-body">
+            <h2 class="media-heading">基于Bootstrap</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus lacus nulla, eget varius justo tristique ut.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-8">
+        <div class="media wow fadeInUp" data-wow-delay="1.2s">
+          <div class="media-object media-left">
+            <i class="icon icon-chat"></i>
+          </div>
+          <div class="media-body">
+            <h2 class="media-heading">支持适配</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus lacus nulla, eget varius justo tristique ut.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix text-center col-md-12 col-sm-12">
+        <a href="#contact" class="btn btn-default smoothScroll">Talk to us</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- contact section -->
+<section id="contact">
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-offset-2 col-md-8 col-sm-12">
+				<div class="section-title">
+					<h1 class="wow fadeInUp" data-wow-delay="0.3s">即刻联系我们</h1>
+					<p class="wow fadeInUp" data-wow-delay="0.6s">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet. Dolore magna aliquam erat volutpat.</p>
+				</div>
+				<div class="contact-form wow fadeInUp" data-wow-delay="1.0s">
+					<form id="contact-form" method="post" action="#">
+                        <div class="col-md-6 col-sm-6">
+                          	<input name="name" type="text" class="form-control" placeholder="您的称呼" required="true"/>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                          	<input name="email" type="email" class="form-control" placeholder="您的邮箱" required="true"/>
+                        </div>
+           			  	<div class="col-md-12 col-sm-12">
+				   			<textarea name="message" class="form-control" placeholder="您的留言..." rows="6" required="true"></textarea>
+           			  	</div>
+						<div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8">
+							<input name="submit" type="submit" class="form-control submit" id="submit" value="发送信息"/>
+						</div>
 					</form>
 				</div>
-				
-			</nav>
-			<div class="jumbotron">
-				<h1>
-					运维专家
-				</h1>
-				<p>
-				——垂直IT领域，连接IT价值！
-				</p>
-				<p>
-					 <a class="btn btn-primary btn-large" href="#">了解更多</a>
-				</p>
 			</div>
+	
 		</div>
 	</div>
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<div class="row">
-				<div class="col-md-4">
-					<div class="thumbnail">
-						<img alt="300x200" src="https://s2.img-b.com/build.com/mediabase/site/build.com/images/_uxfiles/campaigns/2017-october/homepage/entryway-schlage.jpg" />
-						<div class="caption">
-							<h3>
-								Thumbnail label
-							</h3>
-							<p>
-								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-							</p>
-							<p>
-								 <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="thumbnail">
-						<img alt="300x200" src="https://s1.img-b.com/build.com/mediabase/site/build.com/images/_uxfiles/campaigns/2017-october/homepage/elkay-sinks.jpg" />
-						<div class="caption">
-							<h3>
-								Thumbnail label
-							</h3>
-							<p>
-								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-							</p>
-							<p>
-								 <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
-							</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="thumbnail">
-						<img alt="300x200" src="https://s1.img-b.com/build.com/mediabase/site/build.com/images/_uxfiles/campaigns/2017-october/homepage/brizo-touch.jpg" />
-						<div class="caption">
-							<h3>
-								Thumbnail label
-							</h3>
-							<p>
-								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-							</p>
-							<p>
-								 <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
+</section>
+
+<!-- footer section -->
+<footer>
+	<div class="container">
+		<div class="row">
+
+      <svg class="svgcolor-light" preserveAspectRatio="none" viewBox="0 0 100 102" height="100" width="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 0 L50 100 L100 0 Z"></path>
+      </svg>
+
+      <div class="col-md-4 col-sm-6">
+        <h2>comila</h2>
+          <div class="wow fadeInUp" data-wow-delay="0.3s">
+             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque luctus lacus nulla, eget varius justo tristique ut. Etiam a tellus magna.</p>
+             <p class="copyright-text">Copyright &copy; 2016 Your Company</p>
+          </div>
+      </div>
+
+      <div class="col-md-1 col-sm-1"></div>
+
+      <div class="col-md-4 col-sm-5">
+        <h2>Our Studio</h2>
+        <p class="wow fadeInUp" data-wow-delay="0.6s">
+          120-240 aliquam augue libero,
+          Convallis in vulputate 10220 
+          San Francisco, CA, USA
+        </p>
+        <ul class="social-icon">
+          <li><a href="#" class="fa fa-facebook wow bounceIn" data-wow-delay="0.9s"></a></li>
+          <li><a href="#" class="fa fa-twitter wow bounceIn" data-wow-delay="1.2s"></a></li>
+          <li><a href="#" class="fa fa-behance wow bounceIn" data-wow-delay="1.4s"></a></li>
+          <li><a href="#" class="fa fa-dribbble wow bounceIn" data-wow-delay="1.6s"></a></li>
+        </ul>
+      </div>
+
 		</div>
 	</div>
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<p class="lead text-center text-info">
-				 <em>Git</em> 是一个分布式的版本控制系统，最初由 <strong>Linus Torvalds</strong> 编写，用作Linux内核代码的管理。在推出后，Git在其它项目中也取得了很大成功，尤其是在 <small>Ruby</small> 社区中。
-			</p>
-		</div>
-	</div>
+</footer>
+
+<!-- modal -->
+<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content modal-popup">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h2 class="modal-title">登录</h2>
+        </div>
+        <form role="form" action="api/login"  method="post">
+          <input name="account" type="text" class="form-control" id="fullname" placeholder="登录账号"/>
+          <input name="password" type="password" class="form-control" id="email" placeholder="登录密码"/>
+          <input name="submit" type="submit" class="form-control" id="submit" value="登录"/>
+        </form>
+      </div>
+  </div>
 </div>
 
-<div class="modal fade" id="modal-container-233178" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-							<h4 class="modal-title" id="myModalLabel">
-								用户登录
-							</h4>
-						</div>
-						<div class="modal-body">
-							<div class="row clearfix">
-		<div class="col-md-12 column">
-			<form role="form" action="api/login"  method="post">
-				<div class="form-group">
-					 <label for="exampleInputEmail1">帐号</label><input type="text" name="account" class="form-control" id="exampleInputEmail1" placeholder="email@mpub.cn"/>
-				</div>
-				<div class="form-group">
-					 <label for="exampleInputPassword1">密码</label><input type="password"  name="password" class="form-control" id="exampleInputPassword1" placeholder="******"/>
-				</div>
-				<div class="checkbox">
-					 <label><input type="checkbox" />记住我</label>
-				</div> <button type="submit" class="btn btn-success btn-lg col-md-12">登录</button>
-			</form>
-		</div>
-	</div>
-						</div>
-					</div>
-					
-				</div>
-				
-			</div>
-<!-- Le javascript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script th:src="@{/foreend/jquery/jquery-1.9.1.js}"></script>
-<script th:src="@{/foreend/bootstrap/3.3.4/js/bootstrap.min.js}"></script>
+
+<!-- Back top -->
+<a href="#back-top" class="go-top"><i class="fa fa-angle-up"></i></a>
+
+<!-- javscript js -->
+<script th:src="@{/frontend/js/jquery.js}"></script>
+<script th:src="@{/frontend/js/bootstrap.min.js}"></script>
+
+<script th:src="@{/frontend/js/vegas.min.js}"></script>
+
+<script th:src="@{/frontend/js/wow.min.js}"></script>
+<script th:src="@{/frontend/js/smoothscroll.js}"></script>
+<script th:src="@{/frontend/js/custom.js}"></script>
+
 </body>
 </html>

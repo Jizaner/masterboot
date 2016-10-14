@@ -1,0 +1,140 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">添加资讯</h1>
+</div>
+<div class="wrapper-md" ng-controller="FormNewsCtrl">
+  <!-- toaster directive -->
+  <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+  <!-- / toaster directive -->
+  <div class="panel panel-default">
+    <div class="panel-heading font-bold">
+         <a ui-sref="app.form.news" class="btn btn-default">返回列表</a>
+    </div>
+    <div class="panel-body">
+      <form class="form-horizontal form-validation" name="step1" method="get">
+        <div class="form-group">
+          <label class="col-sm-2 control-label">资讯标题</label>
+          <div class="col-sm-10">
+            <input type="text"  class="form-control" placeholder="请输入资讯标题" ng-model="news.title" required>
+          </div>
+        </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">内容摘要</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" placeholder="请输入内容摘要" ng-model="news.summary" required>
+            <span class="help-block m-b-none">字数不超过100字。</span>
+          </div>
+        </div>
+        
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">转载来源</label>
+          <div class="col-sm-10">
+            <label class="checkbox-inline i-checks">
+              <input type="radio" ng-model="news.source" required name="source" value="虎嗅"><i></i> 虎嗅
+            </label>
+            <label class="checkbox-inline i-checks">
+              <input type="radio" ng-model="news.source" required name="source" value="36氪"><i></i> 36氪
+            </label>
+            <label class="checkbox-inline i-checks">
+              <input type="radio" ng-model="news.source" required name="source" value="网易"><i></i> 网易
+            </label>
+            <label class="checkbox-inline i-checks">
+              <input type="radio" ng-model="news.source" required name="source" value="凤凰网"><i></i> 凤凰网
+            </label>
+            <label class="checkbox-inline i-checks">
+              <input type="radio" ng-model="news.source" required name="source" value="搜狐"><i></i> 3搜狐
+            </label>
+            <label class="checkbox-inline i-checks">
+              <input type="radio" ng-model="news.source" required name="source" value="51CTO"><i></i> 51CTO
+            </label>
+            <label class="checkbox-inline i-checks">
+              <input type="radio" ng-model="news.source" required name="source" value="爱范儿"><i></i> 爱范儿
+            </label>
+            <label class="checkbox-inline i-checks">
+              <input type="radio" ng-model="news.source" required name="source" value="知乎"><i></i> 知乎
+            </label>
+            <label class="checkbox-inline i-checks">
+              <input type="radio" ng-model="news.source" required name="source" value="CSDN"><i></i> CSDN
+            </label>
+            <label class="checkbox-inline i-checks">
+              <input type="radio" ng-model="news.source" required name="source" value="果壳网"><i></i> 果壳网
+            </label>
+            <label class="checkbox-inline i-checks">
+              <input type="radio" ng-model="news.source" required name="source" value="其他"><i></i> 其他
+            </label>
+          </div>
+        </div>
+		<div class="form-group">
+          <label class="col-sm-2 control-label">来源网址</label>
+          <div class="col-sm-10">
+            <input type="text"  class="form-control" placeholder="http://" ng-model="news.url" required>
+          </div>
+        </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">关键标签</label>
+          <div class="col-sm-10" ng-model="news.tags">
+            <label class="checkbox-inline i-checks" ng-repeat="tag in tags">
+              <input type="checkbox" ng-checked="isChecked(tag.id)" ng-click="updateSelection($event,tag.id,tag.title)"><i></i> {{tag.title}}
+            </label>
+            <label class="checkbox-inline i-checks">
+                          已选 : {{selectedItems}} 
+            </label>
+             
+          </div>
+        </div>
+        
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">初始阅读量</label>
+          <div class="col-sm-10">
+             <input ui-jq="TouchSpin" type="text" value="25" class="form-control" data-initval="25" data-min='0' data-max="100" data-step="1" data-decimals="0" data-postfix="次" ng-model="news.readnum" required>
+          </div>
+        </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">封面地址</label>
+          <div class="col-sm-10">
+             <input type="text"  class="form-control" placeholder="http://" ng-model="news.cover" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">上传封面</label>
+          <div class="col-sm-10">
+            <input ui-jq="filestyle" type="file" data-icon="false" data-classButton="btn btn-default" data-classInput="form-control inline v-middle input-s">
+          </div>
+        </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">详细内容</label>
+          <div class="col-sm-10">
+             <div lazy-load="textAngular">
+    			<div text-angular ng-model="news.content" class="btn-groups"></div>
+  			</div>
+          </div>
+        </div>
+        
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        
+        <div class="form-group">
+          <label class="col-sm-2 control-label">直接发布</label>
+          <div class="col-sm-10">
+            <label class="i-switch i-switch-md bg-info m-t-xs m-r">
+              <input type="checkbox" checked>
+              <i></i>
+            </label>
+          </div>
+        </div>
+        
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <div class="col-sm-4 col-sm-offset-2">
+            <a ui-sref="app.form.news" class="btn btn-default">取消</a>
+            <button type="submit" ng-disabled="step1.$invalid" class="btn btn-primary"  ng-click="submitdata()">保存</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
