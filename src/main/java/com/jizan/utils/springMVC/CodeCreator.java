@@ -9,10 +9,10 @@ import java.util.List;
 
 public class CodeCreator {
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		//CodeUtil.truncateTable("tb_versions");
-		createCodes("Certification","tb_certifications");
-	}*/
+		createCodes("Source","tb_sources");
+	}
 	
 	public String GroupId;// 项目物理目录
 

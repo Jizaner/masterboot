@@ -2,9 +2,6 @@
 
 // signup controller
 app.controller('FormNewsCtrl', ['$scope','toaster', '$http', '$state', function($scope,toaster, $http, $state) {
-	//init varibles
-	//$scope.news=[];
-	//$scope.news.readnum=parseInt(Math.random()*10+1);
 	$scope.selectedItems = [] ;  //声明变量
 	$scope.toaster = {
 	        type: 'success',
@@ -13,6 +10,9 @@ app.controller('FormNewsCtrl', ['$scope','toaster', '$http', '$state', function(
 	    };
 	$http.post('app/tag/list?_='+new Date().getTime(),{cache: false}).success( function(response) {
         $scope.tags = response;
+      });
+	$http.post('app/source/list?_='+new Date().getTime(),{cache: false}).success( function(response) {
+        $scope.sources = response.data;
       });
 	//actions
 	$scope.isChecked = function(id){  

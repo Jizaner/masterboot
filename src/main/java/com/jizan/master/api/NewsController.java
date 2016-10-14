@@ -105,7 +105,7 @@ public class NewsController extends BaseController{
 	}
 
 	/* Delete ***************/
-	@ApiOperation(value = "删除news#v1.0",notes = "删除news#v1.0")
+/*	@ApiOperation(value = "删除news#v1.0",notes = "删除news#v1.0")
 	@RequestMapping(value = "/delete",method=RequestMethod.POST)
 	@ResponseBody
 	public JsonResult _delete(
@@ -114,6 +114,22 @@ public class NewsController extends BaseController{
 			String[] ids = idstring.split(",");
 			for (int i = 0; i < ids.length; i++) {
 				this.newsService.removeById(Integer.parseInt(ids[i]));
+			}
+		} catch (Exception e) {
+			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);
+		}
+		return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN);
+	}
+	*/
+	/* Delete ***************/
+	@ApiOperation(value = "删除news#v1.0",notes = "删除news#v1.0")
+	@RequestMapping(value = "/delete",method=RequestMethod.POST)
+	@ResponseBody
+	public JsonResult _delete(@RequestBody String ids) {
+		try {
+			String[] idsArray = ids.split(",");
+			for (int i = 0; i < idsArray.length; i++) {
+				this.newsService.removeById(Integer.parseInt(idsArray[i]));
 			}
 		} catch (Exception e) {
 			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);

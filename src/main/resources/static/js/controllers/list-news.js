@@ -1,8 +1,8 @@
 'use strict';
 
 // signup controller
-app.controller('ListNewsCtrl', ['$scope', '$http', '$state', '$filter',function($scope, $http, $state,$filter) {
-   
+app.controller('ListNewsCtrl', ['$scope', '$http', '$state', '$filter','$modal', '$log',function($scope, $http, $state,$filter,$modal,$log) {
+   //datatables---
 	$scope.options = {
 			serverSide: true,
 			autoWidth: true,
@@ -20,8 +20,8 @@ app.controller('ListNewsCtrl', ['$scope', '$http', '$state', '$filter',function(
 	  		            {data: null}
 	  		          ],
 	  		order: [
-	  		                [4, 'desc']
-	  		            ],
+	  		            [4, 'desc']
+	  		          ],
 	        columnDefs: [ {
 	            "targets": [0,1,2,-1],
 	            "sortable":  false},
@@ -33,7 +33,7 @@ app.controller('ListNewsCtrl', ['$scope', '$http', '$state', '$filter',function(
 	            {
 		            "targets": -1,
 		            "render": function(data, type, row) {
-		                return "<button onclick=\"angular.element(this).scope().editData("+row.id+")\"' class='btn btn-default'>编辑</button> <button onclick=\"angular.element(this).scope().delData("+row.id+")\" class='btn btn-danger'>删除</button>";
+		                return "<button onclick=\"angular.element(this).scope().editData("+row.id+")\"' class='btn btn-default'>编辑</button> <button onclick=\"angular.element(this).scope().openRemoveModal("+row.id+")\" class='btn btn-danger'>删除</button>";
 		            }},
 	            {
 		            "targets": 3,
@@ -62,11 +62,6 @@ app.controller('ListNewsCtrl', ['$scope', '$http', '$state', '$filter',function(
                 "last": "末页"
             }
         },
-	        //bJQueryUI: true,
-	        //bDestroy: true,
-//	        data: [
-//	            ["Webber", "Adam", "Adam", "Adam", "Adam"],["Webber", "Adam", "Adam", "Adam", "Adam"],["Webber", "Adam", "Adam", "Adam", "Adam"]
-//	        ]
 	    };
 
 	    $scope.addData = function () {
@@ -74,21 +69,61 @@ app.controller('ListNewsCtrl', ['$scope', '$http', '$state', '$filter',function(
 	        $scope.options.data.push([$scope.counter, $scope.counter * 2]);
 	    };
 
-	    
-
 	    $scope.delData = function (id) {
 	        //var data = table.row( $(this).parents('tr') ).data();
 	        //alert( data[0] +"'s salary is: "+ data[ 5 ] );
 	    	alert(id);
 	    };
 	    $scope.editData = function (id) {
+	    	$scope.openRemoveModal('lg',id);
 	        //var data = table.row( $(this).parents('tr') ).data();
 	        //alert( data[0] +"'s salary is: "+ data[ 5 ] );
-	    	alert(id);
 	    };
 	    
 	    $scope.counter = 0;
+	  //datatables---end
 	    
-	    
-  }])
- ;
+	$scope.openRemoveModal = function(size,id){  //打开模态 
+		var modalInstance = $modal.open({
+			templateUrl : 'removeModalContent.html',  //指向上面创建的视图
+			controller : 'ModalInstanceCtrler',// 初始化模态范围
+			size : size, //大小配置
+			resolve : {
+				chooseItem : function(){
+					return id;
+				}
+			}
+		})
+		modalInstance.result.then(function(selectedItem){  
+			$scope.selected = selectedItem;
+		},function(){
+			$log.info('消失时间: ' + new Date())
+		})
+	}
+}])
+app.controller('ModalInstanceCtrler',function($scope,$http,toaster,$modalInstance,chooseItem){ //依赖于modalInstance
+		$scope.chooseItem = chooseItem;
+		$scope.selected = {
+			item : chooseItem
+		};
+		$scope.ok = function(){  
+			$modalInstance.close($scope.selected.item); //关闭并返回当前选项
+			$http.post('app/news/delete',''+$scope.selected.item+'')
+		      .then(function(response) {
+		    	if ( !response.data.code || response.data.code!=200) {
+		    		$scope.authError = response;
+		    		toaster.pop($scope.toaster.type, '失败', $scope.authError);
+		        }else{
+		        	toaster.pop('success', '提示', '操作成功！');
+		        }
+		      }, function(x) {
+		    	  $scope.authError = 'Server Error';
+		    	  toaster.pop('error', '错误', $scope.authError);
+		      });
+		};
+		$scope.cancel = function(){
+			$scope.selected.item=[];
+			$modalInstance.dismiss('cancel'); // 退出
+		}
+	})
+;

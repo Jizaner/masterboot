@@ -14,7 +14,7 @@ import {GroupId}.{ArtifactId}.service.{EntityName}Service;
 
 @Api(value = "{entityName}",description = "/*添加注释*/")
 @RestController
-@RequestMapping("/{entityName}")
+@RequestMapping("/app/{entityName}")
 public class {EntityName}Controller {
 
 	@Resource

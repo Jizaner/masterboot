@@ -30,38 +30,8 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">转载来源</label>
           <div class="col-sm-10">
-            <label class="checkbox-inline i-checks">
-              <input type="radio" ng-model="news.source" required name="source" value="虎嗅"><i></i> 虎嗅
-            </label>
-            <label class="checkbox-inline i-checks">
-              <input type="radio" ng-model="news.source" required name="source" value="36氪"><i></i> 36氪
-            </label>
-            <label class="checkbox-inline i-checks">
-              <input type="radio" ng-model="news.source" required name="source" value="网易"><i></i> 网易
-            </label>
-            <label class="checkbox-inline i-checks">
-              <input type="radio" ng-model="news.source" required name="source" value="凤凰网"><i></i> 凤凰网
-            </label>
-            <label class="checkbox-inline i-checks">
-              <input type="radio" ng-model="news.source" required name="source" value="搜狐"><i></i> 3搜狐
-            </label>
-            <label class="checkbox-inline i-checks">
-              <input type="radio" ng-model="news.source" required name="source" value="51CTO"><i></i> 51CTO
-            </label>
-            <label class="checkbox-inline i-checks">
-              <input type="radio" ng-model="news.source" required name="source" value="爱范儿"><i></i> 爱范儿
-            </label>
-            <label class="checkbox-inline i-checks">
-              <input type="radio" ng-model="news.source" required name="source" value="知乎"><i></i> 知乎
-            </label>
-            <label class="checkbox-inline i-checks">
-              <input type="radio" ng-model="news.source" required name="source" value="CSDN"><i></i> CSDN
-            </label>
-            <label class="checkbox-inline i-checks">
-              <input type="radio" ng-model="news.source" required name="source" value="果壳网"><i></i> 果壳网
-            </label>
-            <label class="checkbox-inline i-checks">
-              <input type="radio" ng-model="news.source" required name="source" value="其他"><i></i> 其他
+            <label class="checkbox-inline i-checks"  ng-repeat="source in sources">
+              <input type="radio" ng-model="news.source" required name="source" value="虎嗅"><i></i> {{source.title}}
             </label>
           </div>
         </div>
@@ -84,14 +54,14 @@
              
           </div>
         </div>
-        
+        <!-- 
         <div class="line line-dashed b-b line-lg pull-in"></div>
         <div class="form-group">
-          <label class="col-sm-2 control-label">初始阅读量</label>
+          <label class="col-sm-2 control-label">阅读次数</label>
           <div class="col-sm-10">
-             <input ui-jq="TouchSpin" type="text" value="25" class="form-control" data-initval="25" data-min='0' data-max="100" data-step="1" data-decimals="0" data-postfix="次" ng-model="news.readnum" required>
+             <input ui-jq="TouchSpin" type="text" value="25" class="form-control" data-initval="25" data-min='0' data-max="100" data-step="1" data-decimals="0" data-postfix="次" ng-model="news.readnum">
           </div>
-        </div>
+        </div> -->
         <div class="line line-dashed b-b line-lg pull-in"></div>
         <div class="form-group">
           <label class="col-sm-2 control-label">封面地址</label>

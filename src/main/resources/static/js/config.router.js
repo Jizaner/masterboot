@@ -207,9 +207,9 @@ angular.module('app')
                   cache:'false', 
                   templateUrl: 'tpl/om_table_news.html',
                   resolve: {
-                      deps: ['uiLoad',
+                      deps: ['$ocLazyLoad','uiLoad',
                         function( uiLoad ){
-                          return uiLoad.load( ['js/controllers/list-news.js','vendor/libs/moment.min.js'] );
+                          return uiLoad.load( ['js/controllers/list-news.js','vendor/libs/moment.min.js','toaster'])
                       }]
                   }
               })
