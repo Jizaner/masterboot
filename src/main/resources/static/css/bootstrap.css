@@ -142,6 +142,7 @@ input::-moz-focus-inner {
   border: 0;
 }
 input {
+  -webkit-appearance:none;
   line-height: normal;
 }
 input[type="checkbox"],

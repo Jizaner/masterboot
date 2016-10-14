@@ -424,11 +424,12 @@ footer a:hover {
   padding: 20px;
 }
 .modal-dialog form input {
+  -webkit-appearance:none;
   height: 55px;
 }
 .modal-dialog form .form-control {
   background: transparent;
-  border: 1px solid #f0f0f0;
+  border: 1px solid #c0c0c0;
   border-radius: 0px;
   box-shadow: none;
   font-size: 20px;
