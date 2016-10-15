@@ -7,10 +7,10 @@
   <!-- / toaster directive -->
   <div class="panel panel-default">
     <div class="panel-heading font-bold">
-         <a ui-sref="app.form.news" class="btn btn-default">返回列表</a>
+         <a ui-sref="app.content.listnews" class="btn btn-default">返回列表</a>
     </div>
     <div class="panel-body">
-      <form class="form-horizontal form-validation" name="step1" method="get">
+      <form class="form-horizontal form-validation" name="formAdd" method="get">
         <div class="form-group">
           <label class="col-sm-2 control-label">资讯标题</label>
           <div class="col-sm-10">
@@ -101,7 +101,7 @@
         <div class="form-group">
           <div class="col-sm-4 col-sm-offset-2">
             <a ui-sref="app.form.news" class="btn btn-default">取消</a>
-            <button type="submit" ng-disabled="step1.$invalid" class="btn btn-primary"  ng-click="submitdata()">保存</button>
+            <button type="submit" ng-disabled="formAdd.$invalid" class="btn btn-primary"  ng-click="submitData()">保存</button>
           </div>
         </div>
       </form>

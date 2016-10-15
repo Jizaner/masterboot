@@ -1,8 +1,9 @@
 'use strict';
 
 // signup controller
-app.controller('ListNewsCtrl', ['$scope', '$http', '$state', '$filter','$modal', '$log',function($scope, $http, $state,$filter,$modal,$log) {
-   //datatables---
+app.controller('ListNewsCtrl', ['$scope', '$http', '$state', '$filter','$modal', '$log','toaster',function($scope, $http, $state,$filter,$modal,$log,toaster) {
+   
+	//datatables---
 	$scope.options = {
 			serverSide: true,
 			autoWidth: true,
@@ -82,6 +83,9 @@ app.controller('ListNewsCtrl', ['$scope', '$http', '$state', '$filter','$modal',
 	    
 	    $scope.counter = 0;
 	  //datatables---end
+	    $scope.popme = function(){
+	    	toaster.pop('success', '提示', '操作成功！');
+        };
 	    
 	$scope.openRemoveModal = function(size,id){  //打开模态 
 		var modalInstance = $modal.open({
@@ -94,7 +98,7 @@ app.controller('ListNewsCtrl', ['$scope', '$http', '$state', '$filter','$modal',
 				}
 			}
 		})
-		modalInstance.result.then(function(selectedItem){  
+		modalInstance.result.then(function(selectedItem){  //result：一个契约，当模态窗口被关闭或撤销时传递
 			$scope.selected = selectedItem;
 		},function(){
 			$log.info('消失时间: ' + new Date())
@@ -114,11 +118,12 @@ app.controller('ModalInstanceCtrler',function($scope,$http,toaster,$modalInstanc
 		    		$scope.authError = response;
 		    		toaster.pop($scope.toaster.type, '失败', $scope.authError);
 		        }else{
-		        	toaster.pop('success', '提示', '操作成功！');
+		        	console.log(1);
+		        	toaster.pop('success', "提示", "操作成功！");
 		        }
 		      }, function(x) {
 		    	  $scope.authError = 'Server Error';
-		    	  toaster.pop('error', '错误', $scope.authError);
+		    	  toaster.pop('error', "错误", $scope.authError);
 		      });
 		};
 		$scope.cancel = function(){

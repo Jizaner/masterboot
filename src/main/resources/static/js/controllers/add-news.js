@@ -1,7 +1,7 @@
 'use strict';
 
 // signup controller
-app.controller('FormNewsCtrl', ['$scope','toaster', '$http', '$state', function($scope,toaster, $http, $state) {
+app.controller('FormNewsCtrl', ['$scope','$http', '$state','toaster', function($scope, $http, $state,toaster) {
 	$scope.selectedItems = [] ;  //声明变量
 	$scope.toaster = {
 	        type: 'success',
@@ -18,10 +18,11 @@ app.controller('FormNewsCtrl', ['$scope','toaster', '$http', '$state', function(
 	$scope.isChecked = function(id){  
 	        return $scope.selectedItems.indexOf(id) >= 0 ;  
 	  } ;  
+	  
 	$scope.updateSelection = function($event,id,title){  
 	        var checkbox = $event.target ;  
 	        var checked = checkbox.checked ;  
-	        if(checked){  
+	        if(checked){ 
 	            $scope.selectedItems.push(title) ;  
 	        }else{  
 	            var idx = $scope.selectedItems.indexOf(title) ;  
@@ -29,9 +30,9 @@ app.controller('FormNewsCtrl', ['$scope','toaster', '$http', '$state', function(
 	        }  
 	    } ;
 
-	toaster.pop($scope.toaster.type, $scope.toaster.title, $scope.toaster.text);
+	//toaster.pop($scope.toaster.type, $scope.toaster.title, $scope.toaster.text);
     $scope.authError = null;
-    $scope.submitdata = function() {
+    $scope.submitData = function() {
       $scope.authError = null;
       // Try to create
       console.log($scope.selectedItems);
@@ -48,7 +49,7 @@ app.controller('FormNewsCtrl', ['$scope','toaster', '$http', '$state', function(
     		toaster.pop($scope.toaster.type, '失败', $scope.authError);
         }else{
         	toaster.pop('success', '提示', '操作成功！');
-            $state.go('app.form.news');
+            $state.go('app.content.listnews');
         }
       }, function(x) {
     	  $scope.authError = 'Server Error';

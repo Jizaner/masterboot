@@ -43,6 +43,42 @@ angular.module('app')
                     }]
                   }
               })
+              //--content management--
+              .state('app.content', {
+                  url: '/content',
+                  template: '<div ui-view class="fade-in-up"></div>'
+              })
+              .state('app.content.addnews', {
+                  url: '/addnews',
+                  cache:'true', 
+                  templateUrl: 'tpl/mng_add_news.html',
+                  resolve: {
+                	  deps: ['$ocLazyLoad','uiLoad',
+                	         function( $ocLazyLoad,uiLoad){
+                		  		return uiLoad.load('js/controllers/add-news.js').then(
+                		  				function(){
+                		  					return $ocLazyLoad.load(['toaster','textAngular']);
+                		  				}
+                		  		);
+                	  	}]
+                  	}
+              })
+              .state('app.content.listnews', {
+                  url: '/listnews',
+                  cache:'true', 
+                  templateUrl: 'tpl/mng_list_news.html',
+                  resolve: {
+            	       deps: ['$ocLazyLoad','uiLoad',
+            	         function( $ocLazyLoad,uiLoad){
+            		  		return uiLoad.load(['js/controllers/list-news.js','vendor/libs/moment.min.js']).then(
+            		  				function(){
+            		  					return $ocLazyLoad.load(['toaster','textAngular']);
+            		  				}
+            		  		);
+            	  	}]
+              	}
+              })
+              //--UI compenents--
               .state('app.ui', {
                   url: '/ui',
                   template: '<div ui-view class="fade-in-up"></div>'
@@ -184,32 +220,6 @@ angular.module('app')
                       deps: ['uiLoad',
                         function( uiLoad){
                           return uiLoad.load('js/controllers/form.js');
-                      }]
-                  }
-              })
-              .state('app.form.addnews', {
-                  url: '/addnews',
-                  cache:'true', 
-                  templateUrl: 'tpl/om_form_news.html',
-                  resolve: {
-                	  deps: ['$ocLazyLoad','uiLoad',
-                	         function( $ocLazyLoad,uiLoad){
-                		  		return uiLoad.load('js/controllers/submit-news.js').then(
-                		  				function(){
-                		  					return $ocLazyLoad.load(['toaster','textAngular']);
-                		  				}
-                		  		);
-                	  	}]
-                  	}
-              })
-              .state('app.form.news', {
-                  url: '/listnews',
-                  cache:'false', 
-                  templateUrl: 'tpl/om_table_news.html',
-                  resolve: {
-                      deps: ['$ocLazyLoad','uiLoad',
-                        function( uiLoad ){
-                          return uiLoad.load( ['js/controllers/list-news.js','vendor/libs/moment.min.js','toaster'])
                       }]
                   }
               })

@@ -2,9 +2,13 @@
   <h1 class="m-n font-thin h3">资讯列表</h1>
 </div>
 <div class="wrapper-md" ng-controller="ListNewsCtrl">
+<!-- toaster directive -->
+  <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+  <!-- / toaster directive -->
   <div class="panel panel-default">
     <div class="panel-heading">
-      <a ui-sref="app.form.addnews" class="btn btn-default">新增资讯</a>
+      <a ui-sref="app.content.addnews" class="btn btn-default">新增资讯</a>
+      <button class="btn btn-warning" ng-click="popme()">Show a Toaster</button>
     </div>
     <div class="table-responsive">
        <table ui-jq="dataTable" ui-options="options" class="table table-striped m-b-none">
