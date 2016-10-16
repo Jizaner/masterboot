@@ -16,8 +16,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		// addPathPatterns 用于添加拦截规则
 		// excludePathPatterns 用户排除拦截
 		registry.addInterceptor(new ApiSecurityInterceptor()).addPathPatterns("/**");
-		registry.addInterceptor(new UserSecurityInterceptor()).addPathPatterns("/console#/**").addPathPatterns("/console/**");
-
+		//mng/registry.addInterceptor(new UserSecurityInterceptor()).addPathPatterns("/console#/**").addPathPatterns("/console/**");
+		registry.addInterceptor(new UserSecurityInterceptor()).addPathPatterns("/mng/**");
 		super.addInterceptors(registry);
 		// registry.addInterceptor(new
 		// LegalInterceptor()).addPathPatterns("/xx/**")//要拦截的请求

@@ -43,15 +43,15 @@ angular.module('app')
                     }]
                   }
               })
-              //--content management--
+              //--内容管理模块--
               .state('app.content', {
                   url: '/content',
                   template: '<div ui-view class="fade-in-up"></div>'
               })
               .state('app.content.addnews', {
-                  url: '/addnews',
+                  url: '/mng/addnews',
                   cache:'true', 
-                  templateUrl: 'tpl/mng_add_news.html',
+                  templateUrl: 'mng/addnews',//test
                   resolve: {
                 	  deps: ['$ocLazyLoad','uiLoad',
                 	         function( $ocLazyLoad,uiLoad){
@@ -66,13 +66,13 @@ angular.module('app')
               .state('app.content.listnews', {
                   url: '/listnews',
                   cache:'true', 
-                  templateUrl: 'tpl/mng_list_news.html',
+                  templateUrl: 'mng/listnews',
                   resolve: {
             	       deps: ['$ocLazyLoad','uiLoad',
             	         function( $ocLazyLoad,uiLoad){
             		  		return uiLoad.load(['js/controllers/list-news.js','vendor/libs/moment.min.js']).then(
             		  				function(){
-            		  					return $ocLazyLoad.load(['toaster','textAngular']);
+            		  					return $ocLazyLoad.load(['datatables','toaster']);
             		  				}
             		  		);
             	  	}]

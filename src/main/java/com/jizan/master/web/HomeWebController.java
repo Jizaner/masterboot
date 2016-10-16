@@ -69,6 +69,7 @@ public class HomeWebController {
 			if (null != resultUser) {
 				HttpSession session = request.getSession();
 				session.setAttribute("cur_user", user);
+				//response.setHeader("userid",user.getId().toString());
 				return "redirect:/console";
 			}
 		} catch (Exception e) {
@@ -77,10 +78,10 @@ public class HomeWebController {
 		return "redirect:/register";
 
 	}
-	
+
 	@RequestMapping(value = "api/console/login", method = RequestMethod.POST)
 	@ResponseBody
-	public JsonResult doLoginViaJson(@RequestBody Map<String,String> accountinfo) {
+	public JsonResult doLoginViaJson(@RequestBody Map<String, String> accountinfo) {
 		// model.addAttribute("xname", account);
 		try {
 			User user = new User();
@@ -90,15 +91,13 @@ public class HomeWebController {
 			if (null != resultUser) {
 				HttpSession session = request.getSession();
 				session.setAttribute("cur_user", resultUser);
-				return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN,resultUser);
+				return new JsonResult(SystemConfig.SUCCESS, SystemConfig.WIN, resultUser);
 			}
 		} catch (Exception e) {
-			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.ERROR,e);
+			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.ERROR, e);
 		}
 		return new JsonResult(SystemConfig.DEFEAT, SystemConfig.ERROR);
 	}
-	
-	
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String doLogout() {
@@ -109,13 +108,7 @@ public class HomeWebController {
 		}
 		request.getSession().removeAttribute("cur_user");
 		request.getSession().invalidate();
-		return "redirect:/register";
-	}
-
-	// --backend
-	@RequestMapping("/console")
-	public String _doView() {
-		return "/angulr/index";
+		return "redirect:/register";// 跳转至其他的controller
 	}
 
 	// --ajax

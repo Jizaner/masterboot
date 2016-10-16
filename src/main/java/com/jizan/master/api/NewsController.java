@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.*;
@@ -15,6 +16,7 @@ import com.jizan.utils.DTPager;
 import com.jizan.utils.JsonResult;
 import com.jizan.utils.SystemConfig;
 import com.jizan.master.entity.News;
+import com.jizan.master.entity.User;
 import com.jizan.master.service.NewsService;
 
 @Api(value = "资讯接口")
@@ -83,7 +85,9 @@ public class NewsController extends BaseController{
 	public JsonResult _new(@RequestBody News news) {
 		try {
 			news.setCreatedon(System.currentTimeMillis()/1000);
-			//news.setCreatedby(getCurrentUserId());
+			HttpSession session = request.getSession();
+			User currentUser= (User)session.getAttribute("cur_user");
+			news.setCreatedby(currentUser.getId());
 			this.newsService.add(news);
 		} catch (Exception e) {
 			return new JsonResult(SystemConfig.DEFEAT, SystemConfig.EXCEPTION, e);

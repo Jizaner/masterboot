@@ -1,134 +1,121 @@
 'use strict';
 
 // signup controller
-app.controller('ListNewsCtrl', ['$scope', '$http', '$state', '$filter','$modal', '$log','toaster',function($scope, $http, $state,$filter,$modal,$log,toaster) {
-   
-	//datatables---
-	$scope.options = {
-			serverSide: true,
-			autoWidth: true,
-	        ajax: {
-	    		url: 'app/news/dtpager',
-	    		type:"POST",
-	    		dataSrc: 'data'
-	  			},
-	  		columns: [
-	  		            {data: 'cover' },
-	  		            {data: 'title' },
-	  		            {data: 'source' },
-	  		            {data: 'id' },
-	  		            {data: 'createdon'},
-	  		            {data: null}
-	  		          ],
-	  		order: [
-	  		            [4, 'desc']
-	  		          ],
-	        columnDefs: [ {
-	            "targets": [0,1,2,-1],
-	            "sortable":  false},
-	            {
-	            "targets": 0,
-	            "render": function(data, type, row) {
-	                return "<img style='width:50px;height:50px;' src='"+data+"' />";
-	            }},
-	            {
-		            "targets": -1,
-		            "render": function(data, type, row) {
-		                return "<button onclick=\"angular.element(this).scope().editData("+row.id+")\"' class='btn btn-default'>编辑</button> <button onclick=\"angular.element(this).scope().openRemoveModal("+row.id+")\" class='btn btn-danger'>删除</button>";
-		            }},
-	            {
-		            "targets": 3,
-		            "render": function(data, type, row) {
-		                return row.readnum;
-		            }
-	        },
-            {
-	            "targets": 4,
-	            "render": function(data, type, row) {
-	                return  $filter('fromNow')(data*1000,'YYYY-MM-DD');//(arg1,arg2);//row.createdon;
-	            }
-        }
-	        ],
-        language: {//下面是一些汉语翻译
-            "search": "搜索",
-            "lengthMenu": "每页显示 _MENU_ 条记录",
-            "infoEmtpy": "没有数据",
-            "processing": "正在加载数据...",
-            "info": "显示 _START_ 至 _END_ 条 &nbsp;&nbsp;共 _TOTAL_ 条",
-            "paginate":
-            {
-                "first": "首页",
-                "previous": "前一页",
-                "next": "后一页",
-                "last": "末页"
-            }
-        },
-	    };
-
-	    $scope.addData = function () {
-	        $scope.counter = $scope.counter + 1;
-	        $scope.options.data.push([$scope.counter, $scope.counter * 2]);
-	    };
-
-	    $scope.delData = function (id) {
-	        //var data = table.row( $(this).parents('tr') ).data();
-	        //alert( data[0] +"'s salary is: "+ data[ 5 ] );
-	    	alert(id);
-	    };
-	    $scope.editData = function (id) {
-	    	$scope.openRemoveModal('lg',id);
-	        //var data = table.row( $(this).parents('tr') ).data();
-	        //alert( data[0] +"'s salary is: "+ data[ 5 ] );
-	    };
+app.controller('ListNewsCtrl', ['$scope', '$http', '$state',
+                                '$filter','$compile','$modal',
+                                'DTOptionsBuilder','DTColumnDefBuilder','DTColumnBuilder','toaster',
+                                function($scope, $http, $state,$filter,$compile,$modal,DTOptionsBuilder,
+                                		DTColumnDefBuilder,DTColumnBuilder,toaster) {
+ 
+	 	var vm = this;
+	 	vm.message = '';
+	    vm.edit = edit;
+	    vm.delete = deleteRow;
+	    vm.news = {};
+	    vm.dtOptions = DTOptionsBuilder.newOptions()
+	    .withOption('ajax', {
+	    	url: 'app/news/dtpager',
+    		type:"POST",
+    		dataSrc: 'data'
+        })
+        .withOption('serverSide', true)
+        .withLanguageSource('vendor/jquery/datatables/i18n/Chinese.json')
+        .withOption('createdRow', createdRow)
+        .withPaginationType('full_numbers');
 	    
-	    $scope.counter = 0;
-	  //datatables---end
-	    $scope.popme = function(){
-	    	toaster.pop('success', '提示', '操作成功！');
-        };
+	    vm.dtColumns = [
+	                    DTColumnBuilder.newColumn('id').withTitle('ID').notVisible(),
+	                    DTColumnBuilder.newColumn('cover').withTitle('资讯封面').notSortable().renderWith(coverHtml),
+	                    DTColumnBuilder.newColumn('title').withTitle('资讯标题').notSortable(),
+	                    DTColumnBuilder.newColumn('source').withTitle('转载来源').notSortable(),
+	                    DTColumnBuilder.newColumn('readnum').withTitle('阅读次数'),
+	                    DTColumnBuilder.newColumn('createdon').withTitle('发布时间').renderWith(posttimeHtml),
+	                   DTColumnBuilder.newColumn(null).withTitle('操作').notSortable().renderWith(actionsHtml)
+	                ];
 	    
-	$scope.openRemoveModal = function(size,id){  //打开模态 
-		var modalInstance = $modal.open({
-			templateUrl : 'removeModalContent.html',  //指向上面创建的视图
-			controller : 'ModalInstanceCtrler',// 初始化模态范围
-			size : size, //大小配置
-			resolve : {
-				chooseItem : function(){
-					return id;
-				}
-			}
-		})
-		modalInstance.result.then(function(selectedItem){  //result：一个契约，当模态窗口被关闭或撤销时传递
-			$scope.selected = selectedItem;
-		},function(){
-			$log.info('消失时间: ' + new Date())
-		})
-	}
+	    vm.dtColumnDefs = [
+	                       DTColumnDefBuilder.newColumnDef(0).notVisible(),
+	                       DTColumnDefBuilder.newColumnDef(1).notSortable(),
+	                       DTColumnDefBuilder.newColumnDef(2).notSortable()
+	                   ];
+	    
+	    vm.reloadData = reloadData;
+	    vm.dtInstance = {};
+
+	    function edit(news) {
+	        //vm.message = 'You are trying to edit the row: ' + JSON.stringify(news);
+	        // Edit some data and call server to make changes...
+	        // Then reload the data so that DT is refreshed
+	        vm.dtInstance.reloadData();
+	        toaster.pop('info', '提示', '此功能正在开发中...['+news.id+']');
+	    }
+	    function deleteRow(news) {
+	    	$scope.openWin('lg',news.id);
+
+	        //vm.message = 'You are trying to remove the row: ' + JSON.stringify(news);
+	        // Delete some data and call server to make changes...
+	        // Then reload the data so that DT is refreshed
+	        //vm.dtInstance.reloadData();
+	        //toaster.pop('success', '提示', '操作成功！'+news.id);
+	    }
+	    function createdRow(row, data, dataIndex) {
+	        // Recompiling so we can bind Angular directive to the DT
+	        $compile(angular.element(row).contents())($scope);
+	    }
+	    function coverHtml(data, type, full, meta) {
+	    	return "<img style='width:80px;height:80px;' src='"+data+"' />";
+	    }
+	    function posttimeHtml(data, type, full, meta) {
+	        return  $filter('fromNow')(data*1000,'YYYY-MM-DD');
+	    }
+
+	    function actionsHtml(data, type, full, meta) {
+	    	vm.news[data.id] = data;
+	        return '<button class="btn btn-success" ng-click="showCase.edit(showCase.news[' + data.id + '])">' +
+	            '   <i class="fa fa-edit"></i>' +
+	            '</button>&nbsp;' +
+	            '<button class="btn btn-danger" ng-click="showCase.delete(showCase.news[' + data.id + '])" )"="">' +
+	            '   <i class="fa fa-trash-o"></i>' +
+	            '</button>';
+	    }
+	    function reloadData() {
+	        var resetPaging = true;//是否刷新所在的页码；是：则重回到首页，否：则保持在当前页
+	        vm.dtInstance.reloadData(callback, resetPaging);
+	    }
+
+	    function callback(json) {
+	        console.log(json);
+	    }
+	    
+	    //---
+	    $scope.openWin = function(size,id){
+	        var modalInstance = $modal.open({
+	                        templateUrl: 'removeModalContent.html',
+	                        backdrop:'static',
+	                        keyboard:false,
+	                        controller: function($scope, $modalInstance) {
+	                            $scope.cancel = function() {
+	                                $modalInstance.dismiss('cancel');
+	                                toaster.pop('info', "提示", "您已取消操作！^_^");
+	                            };
+	                            $scope.ok = function () {
+	                            	$http.post('app/news/delete',''+id+'').then(function(response) {
+	                  		    	if ( !response.data.code || response.data.code!=200) {
+	                  		    		$scope.authError = response;
+	                  		    		toaster.pop('error', '失败', $scope.authError);
+	                  		        }else{
+	                  		        	vm.dtInstance.reloadData();
+	                  		        	toaster.pop('success', "提示", "操作成功！^_^");
+	                  		        }
+	                  		      }, function(x) {
+	                  		    	  $scope.authError = 'Server Error';
+	                  		    	  toaster.pop('error', "错误", $scope.authError);
+	                  		      });
+	                              $modalInstance.close();
+	                            };
+	                        }
+	                    });
+	      }
+	    
 }])
-app.controller('ModalInstanceCtrler',function($scope,$http,toaster,$modalInstance,chooseItem){ //依赖于modalInstance
-		$scope.chooseItem = chooseItem;
-		$scope.selected = {
-			item : chooseItem
-		};
-		$scope.ok = function(){  
-			$modalInstance.close($scope.selected.item); //关闭并返回当前选项
-			$http.post('app/news/delete',''+$scope.selected.item+'')
-		      .then(function(response) {
-		    	if ( !response.data.code || response.data.code!=200) {
-		    		$scope.authError = response;
-		    		toaster.pop($scope.toaster.type, '失败', $scope.authError);
-		        }else{
-		        	console.log(1);
-		        	toaster.pop('success', "提示", "操作成功！");
-		        }
-		      }, function(x) {
-		    	  $scope.authError = 'Server Error';
-		    	  toaster.pop('error', "错误", $scope.authError);
-		      });
-		};
-		$scope.cancel = function(){
-			$scope.selected.item=[];
-			$modalInstance.dismiss('cancel'); // 退出
-		}
-	})
 ;
